@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uruguabot — Bot de trading para mercados de 5 minutos de Polymarket (código fuente completo)</title>
+<meta name="description" content="Un bot de trading para los mercados Up/Down de 5 minutos de Polymarket, vendido con su historial real auditado — pérdidas incluidas. Código Python completo, compra única, sin suscripción.">
+<link rel="canonical" href="https://uruguabot.com/es/">
+<link rel="alternate" hreflang="en" href="https://uruguabot.com/">
+<link rel="alternate" hreflang="es" href="https://uruguabot.com/es/">
+<link rel="stylesheet" href="/style.css">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Uruguabot — Bot de trading para Polymarket 5 minutos">
+<meta property="og:description" content="El único bot de Polymarket que se vende con su historial completo auditado — pérdidas incluidas. Código completo, compra única.">
+<meta property="og:url" content="https://uruguabot.com/es/">
+</head>
+<body>
+<header class="site">
+  <a class="logo" href="/es/">Urugua<span>bot</span></a>
+  <nav>
+    <a href="/docs.html">Docs (EN)</a>
+    <a href="/blog/">Blog (EN)</a>
+    <a href="/es/#resultados">Resultados reales</a>
+    <a href="/es/#faq">Preguntas</a>
+    <a href="/">English</a>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <h1>Un bot de trading para Polymarket vendido con su historial <em>real</em> — pérdidas incluidas.</h1>
+    <p class="lead">Uruguabot es un framework en Python, con código completo, para los mercados Up/Down de 5 minutos de Bitcoin en Polymarket. La mayoría de los bots se venden con capturas verdes truchas. Este se entrega con la historia completa y auditada de lo que hizo con dinero real.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Comprar el código completo — US$99</a>
+      <a class="btn secondary" href="#resultados">Ver los números honestos</a>
+      <span class="price">Compra única · Sin suscripción · Sin telemetría</span>
+    </div>
+    <div class="honest">
+      <strong>Leé esto antes de comprar.</strong>
+      Esto no es una máquina de imprimir plata. Nuestra propia corrida en vivo, 100% automática, fue pérdida neta en total. Solo una configuración fue rentable — es la que viene por defecto, con todos los números publicados abajo. Comprás infraestructura profesional de trading y lecciones caras documentadas, no ganancias garantizadas. Operar implica riesgo sustancial de pérdida.
+    </div>
+  </section>
+
+  <section id="resultados">
+    <h2>Los resultados reales y auditados</h2>
+    <p>Uruguabot operó dinero real en Polymarket en mayo de 2026, probando dos configuraciones de salida una tras otra. Resultados, verificados contra el historial exportado del propio exchange:</p>
+    <div class="tablewrap">
+    <table>
+      <tr><th>Fase</th><th>Configuración</th><th>Aciertos</th><th>ROI</th></tr>
+      <tr><td>Hipótesis A</td><td>TP/SL simétricos</td><td>49%</td><td>−10,0%</td></tr>
+      <tr><td><strong>Hipótesis B</strong> (hoy el default)</td><td>SL apretado, winners a resolución</td><td>40%</td><td><strong>+7,3%</strong></td></tr>
+    </table>
+    </div>
+    <p class="price">El experimento completo igual fue pérdida neta — un bug de infraestructura (ya arreglado) costó más de lo que la estrategia ganó. Todos los números están en la <a href="/blog/we-lost-270-building-a-polymarket-bot.html">auditoría completa</a> (en inglés).</p>
+    <div class="grid">
+      <div class="card"><h3>El edge es la asimetría, no la predicción</h3><p>La configuración rentable acertó solo el 39–40% de sus trades. Las pérdidas se cortaron en −$0,85 promedio; los ganadores se sostuvieron hasta resolución a +$2,46 promedio. Ese mecanismo — no una señal mágica — es lo que comprás.</p></div>
+      <div class="card"><h3>La pérdida más grande fue un bug, no el mercado</h3><p>La API de posiciones de Polymarket tiene lag en mercados de 5 minutos. Órdenes que sí llenaron se abandonaban como "fantasmas": −$88, más que todo lo que ganó la estrategia. El fix viene activado.</p></div>
+      <div class="card"><h3>El modelo ML nunca superó la moneda</h3><p>48–50% de accuracy en vivo pese a 57% en entrenamiento. El "brain" se entrega sin entrenar y es opcional: lo entrenás con tus propios datos del régimen actual — o lo dejás apagado.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué incluye</h2>
+    <div class="grid">
+      <div class="card"><h3>Motor de trading</h3><p>Descubrimiento de mercados, señales multi-timeframe (30s/1m/5m), filtros de entrada, salidas asimétricas.</p></div>
+      <div class="card"><h3>Ejecución (CLOB V2)</h3><p>Órdenes FOK con detección de ghost fills por delta de USDC, manejo de lecturas stale, balance on-chain de respaldo.</p></div>
+      <div class="card"><h3>Simulador honesto</h3><p>El dry-run usa slippage medido de trades reales (entrada −1,2¢, SL −1,3¢, TP −8,8¢ promedio) — no fills de fantasía.</p></div>
+      <div class="card"><h3>Risk rails + vol guard</h3><p>Circuit breakers de pérdida diaria, rachas y órdenes sin llenar, más un guard que evita regímenes violentos. Todo activado por defecto.</p></div>
+      <div class="card"><h3>Monitor de señales</h3><p>Panel web local que congela predicciones antes de cada ventana y mide la accuracy real de cada señal — incluidos tus picks manuales — sin gastar un dólar.</p></div>
+      <div class="card"><h3>Herramientas</h3><p>Verificador de wallet, reportes de estado, medición de drift dry-vs-live, detector de shares huérfanas. ~15 archivos Python legibles, docs bilingües.</p></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Es rentable?</summary><p>Con honestidad: nuestra prueba en vivo 100% automática fue pérdida neta en total. Una configuración — la que viene por defecto — fue rentable (+7,3% ROI con 40% de aciertos); no se promete rendimiento futuro. Comprás infraestructura y lecciones documentadas, no ganancias garantizadas.</p></details>
+    <details><summary>¿Necesito saber programar?</summary><p>Tenés que manejarte con una terminal y editar un archivo de configuración. La instalación son tres comandos. Modificar la estrategia requiere Python.</p></details>
+    <details><summary>¿Hay suscripción, servidor de licencias o telemetría?</summary><p>No, no y no. Compra única, código completo, corre entero en tu máquina. Se vende como está, sin obligación de soporte — el código es chico a propósito para que lo puedas mantener vos.</p></details>
+    <details><summary>¿Funciona en Estados Unidos?</summary><p>Polymarket restringe el trading desde varias jurisdicciones, incluido EE.UU. Verificá las restricciones vigentes de Polymarket y las leyes de tu país antes de comprar. El bot no incluye ningún mecanismo para evadir restricciones geográficas.</p></details>
+    <details><summary>¿Puedo probarlo sin plata?</summary><p>Sí — el modo por defecto es dry-run, con fills simulados usando slippage medido empíricamente. El monitor además mide la accuracy de las señales en tiempo real sin operar.</p></details>
+  </section>
+</main>
+<footer class="site">
+  <p><strong>Declaración de riesgos:</strong> Operar implica riesgo sustancial de pérdida. Los mercados de Polymarket son binarios y las posiciones resuelven con frecuencia a $0,00. El rendimiento pasado — bueno o malo — no predice resultados futuros. Nada en este sitio es consejo financiero. Nunca operes dinero que no puedas permitirte perder por completo.</p>
+  <p>Uruguabot es un proyecto independiente, sin afiliación con Polymarket ni Chainlink. · <a href="/docs.html">Docs</a> · <a href="/blog/">Blog</a> · <a href="/">English</a></p>
+</footer>
+</body>
+</html>

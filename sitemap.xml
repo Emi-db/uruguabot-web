@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://uruguabot.com/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://uruguabot.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://uruguabot.com/es/"/>
+  </url>
+  <url>
+    <loc>https://uruguabot.com/es/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://uruguabot.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://uruguabot.com/es/"/>
+  </url>
+  <url><loc>https://uruguabot.com/docs.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://uruguabot.com/blog/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://uruguabot.com/blog/we-lost-270-building-a-polymarket-bot.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://uruguabot.com/blog/how-to-automate-polymarket-trading-2026.html</loc><lastmod>2026-08-11</lastmod></url>
+</urlset>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We Lost $270 Building a Polymarket Bot — The Complete Audit</title>
+<meta name="description" content="Full audited post-mortem of two Polymarket trading bot generations: 4,000+ logged trades, measured slippage, ghost fills, a phantom +11% ROI, and the one configuration that was actually profitable.">
+<link rel="canonical" href="https://uruguabot.com/blog/we-lost-270-building-a-polymarket-bot.html">
+<link rel="stylesheet" href="/style.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="We Lost $270 Building a Polymarket Bot — The Complete Audit">
+<meta property="og:description" content="4,000+ logged trades, measured slippage, ghost fills, and the one configuration that actually worked. Every number published.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "We Lost $270 Building a Polymarket Bot — The Complete Audit",
+  "datePublished": "2026-08-11",
+  "author": {"@type": "Organization", "name": "Uruguabot"},
+  "publisher": {"@type": "Organization", "name": "Uruguabot"},
+  "mainEntityOfPage": "https://uruguabot.com/blog/we-lost-270-building-a-polymarket-bot.html",
+  "description": "Full audited post-mortem of two Polymarket trading bot generations: measured slippage, ghost fills, phantom backtest gains, and the one configuration that was profitable in live trading."
+}
+</script>
+</head>
+<body>
+<header class="site">
+  <a class="logo" href="/">Urugua<span>bot</span></a>
+  <nav>
+    <a href="/docs.html">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#results">Real results</a>
+    <a href="/es/">Español</a>
+  </nav>
+</header>
+<main>
+<article>
+  <h1>We lost $270 building a Polymarket bot — the complete audit</h1>
+  <time datetime="2026-08-11">August 2026 · based on trade logs from April–June 2026</time>
+
+  <p class="lead">Between April and May 2026 we built two generations of trading bots for Polymarket's 5-minute Bitcoin/Ethereum Up/Down markets, logged over 4,000 trades, and lost about $270 of real money learning what actually matters. This is the full post-mortem, with every number. If you're thinking about building or buying a Polymarket bot, this article is the tuition we already paid for you.</p>
+
+  <h2>TL;DR — the six facts</h2>
+  <ol>
+    <li>Our signals had a small statistical edge on paper. <strong>Execution ate all of it and then some.</strong></li>
+    <li>A shadow A/B test reported <strong>+11% ROI that never existed</strong> — it simulated fills with zero friction. The same strategy lost 27% in reality.</li>
+    <li>The single worst loss (−$591 in 3 days) came from a "safety feature": the bot auto-adopting wallet positions it hadn't opened — including manual bets on <em>weather markets in Wellington</em>.</li>
+    <li>Take-profit slippage averaged <strong>−8.8 cents per trade</strong> vs. logged prices. Stop-losses fired below their trigger 86% of the time.</li>
+    <li>The only live-profitable configuration won just <strong>40% of its trades</strong> — the edge came from asymmetric exits (cut losers at −10¢, hold winners to resolution), not from predicting better.</li>
+    <li>An ML model with 57% training accuracy delivered <strong>48–50% (a coin flip) live</strong>. 5-minute crypto regimes are not stationary.</li>
+  </ol>
+
+  <h2>Generation 1: "para_bot" (April 2026)</h2>
+  <p>The first bot traded BTC/ETH Up/Down markets on 5 and 15-minute windows with multi-timeframe momentum consensus (30s/1m/5m), a price-band entry filter, programmatic take-profit and stop-loss, and later an ML gate. It was patched live at least 15 times in 48 hours at its worst point. Audited results:</p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Real PnL</td><td><strong>−$153</strong></td></tr>
+    <tr><td>Shadow (frictionless) ROI, same strategy, 5-min</td><td>+0.8% to +11.9%</td></tr>
+    <tr><td>Real ROI, 5-min</td><td><strong>−27%</strong></td></tr>
+    <tr><td>Loss from auto-adopting unlogged wallet positions</td><td>≈ −$591 in 3 days</td></tr>
+  </table>
+  </div>
+
+  <h3>Where the money actually went</h3>
+  <p><strong>1. The frictionless simulation lie.</strong> Our A/B harness compared five configurations in "shadow mode": it entered at the logged price, filled take-profits at the exact limit, and exited stop-losses at the exact trigger. Result: +11% ROI. Reality on the same signals: −27%. The gap decomposed into entry slippage (mean −1.2¢), SL overshoot (fired below trigger 86.4% of the time, mean −6¢ past it), and TP slippage (<strong>mean −8.8¢ per trade</strong> — many fills at zero slippage, but a brutal tail: −18¢, −22¢, −29¢, −36¢). If your backtest doesn't model these, your backtest is fiction.</p>
+  <p><strong>2. The orphan-adoption catastrophe.</strong> After a JSON corruption wiped part of the bet log, we added "orphan recovery": any position in the wallet without a logged bet was adopted and managed with synthetic TP/SL. It seemed prudent. It adopted the owner's <em>manual</em> bets — tennis matches, MLS spreads, and temperature markets in Wellington, Austin and Buenos Aires — and managed them into the ground: about −$591 in three days. The lesson is absolute: <em>if the bot didn't open it, the bot must not touch it.</em></p>
+  <p><strong>3. Ghost fills.</strong> Polymarket's positions API lags several seconds behind fills on 5-minute markets. Orders that actually filled showed zero shares when verified, so the bot marked them "ghost" and abandoned them — leaving real, unmanaged positions, over and over. The eventual fix: verify fills by <strong>USDC balance delta</strong> (did money actually leave the wallet?), not by the positions endpoint.</p>
+  <p><strong>4. Small, dumb, expensive things.</strong> Buying Up <em>and</em> Down of the same market simultaneously (guaranteed loss: paid $1.01 for a $1.00 payout). Selling theoretical share counts instead of observed ones. Validating entry price against one API while executing against another (bought at 7¢ in an illiquid book through a filter that "guaranteed" 30–70¢). Non-atomic JSON writes corrupting the log twice.</p>
+
+  <h3>The audit that saved the project</h3>
+  <p>We stopped, froze the code, and ran a three-phase audit: (1) a full accounting of every logged trade against reality; (2) an autopsy of every real loss; (3) a bootstrap re-simulation of the strategies <em>using the measured friction distributions</em>. Phase 3's verdict: the 5-minute signal had a modest real edge (realistic ROI ≈ +7%, 90% band +5% to +10%) — <strong>the 15-minute markets had none</strong> — and the bot had died of operational debt, not lack of alpha.</p>
+
+  <h2>Generation 2: Uruguabot (May 2026)</h2>
+  <p>Rewritten from scratch in ~15 small files around post-mortem rules: no orphan adoption ever, no synthetic bets, empirical slippage in the simulator, atomic writes, USDC-delta fill verification. It traded real money May 21–30, 2026:</p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Phase</th><th>Config</th><th>Win rate</th><th>ROI</th></tr>
+    <tr><td>Hypothesis A (May 21–27)</td><td>Symmetric TP/SL</td><td>49%</td><td>−10.0%</td></tr>
+    <tr><td>Hypothesis B (May 27–30)</td><td>SL at exec −10¢, hold winners to resolution</td><td>40%</td><td><strong>+7.3%</strong></td></tr>
+  </table>
+  </div>
+  <p>Hypothesis B is the interesting row. We analyzed a batch of recent winning and losing bets with tick-level price history and found a brutal asymmetry: winners drifted up gently (median drawdown −3¢) while losers collapsed (median +30¢ against us). So we stopped trying to predict better and instead made the <em>exits</em> asymmetric: stop-loss tight at −10¢ from execution, no practical take-profit, winners held to binary resolution. It was profitable at a 40% win rate — average loss −$0.85, average win +$2.46.</p>
+  <p>And yet the whole live experiment was still a net loss, because the ghost-fill bug cost more than the strategy earned. The infrastructure lesson, one more time, in cash.</p>
+
+  <h2>What we validated after the fact</h2>
+  <p>Against the full live log: <strong>BTC-only</strong> would have improved PnL by +$26 (BTC: 51% WR, −$2.84; ETH: 42% WR, −$25.96). A <strong>volatility guard</strong> is justified by mechanism: measured SL slippage was median −2¢ but −24¢ at the worst decile, concentrated in violent regimes — one trending day stopped out nearly every entry, sold 25–45¢ below trigger. Loss-streak cooldowns and momentum filters were also tested and <strong>did not help</strong>, so we don't ship them.</p>
+
+  <h2>What all of this is worth to you</h2>
+  <p>If you're building your own bot: steal these lessons, they cost us $270 and two months. If you'd rather start from working infrastructure — the execution layer with every fix above, the calibrated simulator, the risk rails, the monitor — that's exactly what <a href="/">Uruguabot</a> is: our full source, sold once, with this article as its marketing page. No profit promises; you've just read the real numbers.</p>
+
+  <blockquote>Past performance — including ours — does not predict future results. 5-minute crypto markets are close to efficient; any edge is thin, regime-dependent, and can vanish. Never trade money you cannot afford to lose entirely.</blockquote>
+</article>
+</main>
+<footer class="site">
+  <p><strong>Risk disclosure:</strong> Trading involves substantial risk of loss. Nothing on this site is financial advice.</p>
+  <p>Uruguabot is an independent project, not affiliated with Polymarket or Chainlink. · <a href="/">Home</a> · <a href="/blog/">Blog</a></p>
+</footer>
+</body>
+</html>

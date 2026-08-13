@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uruguabot Docs — Setup, Configuration & Going Live</title>
+<meta name="description" content="How to install and run Uruguabot: dry-run setup in 10 minutes, configuration reference, going live safely, and troubleshooting. No wallet needed for dry-run.">
+<link rel="canonical" href="https://uruguabot.com/docs.html">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="site">
+  <a class="logo" href="/">Urugua<span>bot</span></a>
+  <nav>
+    <a href="/docs.html">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#results">Real results</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/es/">Español</a>
+  </nav>
+</header>
+<main>
+<article>
+  <h1>Documentation</h1>
+  <p class="lead">The full documentation ships inside the package (bilingual EN/ES). This page covers what you need to decide whether it's for you, plus the quickstart.</p>
+
+  <h2>Requirements</h2>
+  <ul>
+    <li>Python 3.11+ on Windows, Linux or macOS. No Docker required.</li>
+    <li>A network location where Polymarket is accessible (see <a href="/blog/how-to-automate-polymarket-trading-2026.html">geographic restrictions</a>). Many users run a ~$5/month VPS.</li>
+    <li>For dry-run: nothing else. No wallet, no funds, no account.</li>
+    <li>For live trading: a dedicated Polymarket wallet with a small USDC balance on Polygon + ~$1–2 of POL for gas.</li>
+  </ul>
+
+  <h2>Quickstart (dry-run, no money)</h2>
+  <pre><code>cd uruguabot
+pip install -r requirements.txt
+cp .env.example .env        # Windows: copy .env.example .env
+python uruguabot.py</code></pre>
+  <p>The bot discovers live 5-minute markets, applies the real entry gates, and simulates fills using slippage distributions measured from real trades. Every 30 seconds it prints a diagnostic "funnel" showing exactly which gate filtered which candidate — you always know why it is or isn't trading.</p>
+  <p>Optional monitor panel (measures the real accuracy of every signal, including your own manual picks):</p>
+  <pre><code>python monitor_server.py    # then open http://localhost:8770</code></pre>
+
+  <h2>The default configuration is the validated one</h2>
+  <p>The shipped <code>.env.example</code> is exactly the configuration that was profitable in our live testing ("Hypothesis B"):</p>
+  <ul>
+    <li><strong>Asymmetric exits:</strong> stop-loss at execution price −10¢; winners held to $1.00/$0.00 resolution. Profitable at a 40% win rate because average wins were ~3× average losses.</li>
+    <li><strong>BTC only</strong> (<code>ASSETS=btc</code>): BTC outperformed ETH consistently in our measured data. ETH is opt-in.</li>
+    <li><strong>SELL-consensus entries in the 0.55–0.70 price band</strong> — the tested band.</li>
+    <li><strong>Volatility guard on</strong> (<code>MAX_VOL_2MIN=0.0018</code>): skips regimes where measured SL slippage exploded (median −2¢, worst decile −24¢).</li>
+    <li><strong>Risk rails on:</strong> daily-loss %, consecutive-loss and unfilled-ratio circuit breakers.</li>
+  </ul>
+
+  <h2>Going live (only after dry-run convinces you)</h2>
+  <ol>
+    <li>Create a <strong>dedicated</strong> Polymarket wallet. Never use your main wallet. Fund it small.</li>
+    <li>Set <code>WALLET_ADDRESS</code>, <code>PRIVATE_KEY</code> and <code>POLY_SIG_TYPE</code> in <code>.env</code> (1 = email/proxy wallet, 0 = MetaMask/EOA).</li>
+    <li>Verify everything first: <code>python check_wallet.py</code></li>
+    <li>Set <code>DRY_RUN=false</code> <em>and</em> <code>LIVE_CONFIRM=YES</code>. The bot refuses to start live without both — that's deliberate.</li>
+    <li>Start at <code>BET_USD=2</code> and watch the first hours against your Polymarket activity page.</li>
+  </ol>
+
+  <h2>What's included</h2>
+  <p>~15 core Python files: trading engine, CLOB V2 execution layer with ghost-fill protection, multi-timeframe signals, Chainlink oracle feed, optional ML gate with retraining script, calibrated dry-run simulator, risk rails, monitor panel, and ops tooling (<code>check_status.py</code>, <code>check_wallet.py</code>, <code>compare_dry_vs_live.py</code>, <code>diagnose_orphan_shares.py</code>). Plus bilingual READMEs, a full strategy &amp; results document, EULA and risk disclosure.</p>
+
+  <h2>Support policy</h2>
+  <p>One-time purchase, sold as-is: no support service, no update subscription, no server dependency. The code is deliberately small and heavily commented so you can own and maintain it. That policy is what keeps the price at $99 instead of $99/month.</p>
+
+  <p><a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Get Uruguabot — $99, one-time</a></p>
+</article>
+</main>
+<footer class="site">
+  <p><strong>Risk disclosure:</strong> Trading involves substantial risk of loss. Past performance does not predict future results. Nothing on this site is financial advice.</p>
+  <p>Uruguabot is an independent project, not affiliated with Polymarket or Chainlink. · <a href="/">Home</a> · <a href="/blog/">Blog</a></p>
+</footer>
+</body>
+</html>

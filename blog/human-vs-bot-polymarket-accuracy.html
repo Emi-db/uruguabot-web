@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human vs Bot: We Measured Prediction Accuracy Over 1,934 Polymarket 5-Minute Windows</title>
+<meta name="description" content="One week, 1,934 Polymarket BTC/ETH 5-minute windows: momentum, mean-reversion, orderbook imbalance and an ML model all scored ~48-51% (coin flip). A human's manual picks scored 59%. Full methodology and data.">
+<link rel="canonical" href="https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html">
+<link rel="stylesheet" href="/style.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Human vs Bot: Prediction Accuracy Over 1,934 Polymarket Windows">
+<meta property="og:description" content="Every automated signal was a coin flip. The human hit 59%. Full data.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Human vs Bot: We Measured Prediction Accuracy Over 1,934 Polymarket 5-Minute Windows",
+  "datePublished": "2026-08-11",
+  "author": {"@type": "Organization", "name": "Uruguabot"},
+  "publisher": {"@type": "Organization", "name": "Uruguabot"},
+  "mainEntityOfPage": "https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html",
+  "description": "A one-week measurement of four automated trading signals versus human manual picks on Polymarket 5-minute markets. Automated signals scored 48-51%; the human scored 59% over 83 picks."
+}
+</script>
+</head>
+<body>
+<header class="site">
+  <a class="logo" href="/">Urugua<span>bot</span></a>
+  <nav>
+    <a href="/docs.html">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#results">Real results</a>
+    <a href="/es/">Español</a>
+  </nav>
+</header>
+<main>
+<article>
+  <h1>Human vs bot: we measured prediction accuracy over 1,934 Polymarket 5-minute windows</h1>
+  <time datetime="2026-08-11">August 2026 · data collected June 1–7, 2026</time>
+
+  <p class="lead">After our trading bot's ML model kept scoring a coin flip with real money, we built a measurement rig instead of arguing about it: freeze a prediction 30 seconds before every 5-minute BTC/ETH window closes, from every signal we had — plus a human — and score everything against the actual outcome. No money involved. One week later we had 1,934 scored windows and one uncomfortable result.</p>
+
+  <h2>Methodology</h2>
+  <ul>
+    <li><strong>Markets:</strong> Polymarket "BTC/ETH Up or Down" 5-minute windows, June 1–7, 2026. 1,938 windows monitored, 1,934 resolved and scored.</li>
+    <li><strong>Freeze rule:</strong> each signal's direction (Up/Down) is locked 30 seconds before window close and compared against the resolved outcome. No lookahead, no revision.</li>
+    <li><strong>Signals:</strong> (1) momentum across 30s/1m/5m timeframes; (2) mean-reversion with RSI; (3) Polymarket orderbook imbalance (bid/ask depth); (4) a logistic-regression ML model trained on ~500 real bets with 30 features; (5) an aggregate "lean" of the above; and (6) a human clicking a direction manually whenever they had a view (n=83 picks).</li>
+    <li><strong>Scoring:</strong> straight directional accuracy. A coin flip scores ~50%.</li>
+  </ul>
+
+  <h2>Results</h2>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Signal</th><th>Correct</th><th>Accuracy</th></tr>
+    <tr><td>ML model (logistic regression)</td><td>148 / 308</td><td>48.1%</td></tr>
+    <tr><td>Momentum (multi-timeframe)</td><td>895 / 1834</td><td>48.8%</td></tr>
+    <tr><td>Mean-reversion (RSI)</td><td>744 / 1500</td><td>49.6%</td></tr>
+    <tr><td>Aggregate lean</td><td>698 / 1401</td><td>49.8%</td></tr>
+    <tr><td>Orderbook imbalance</td><td>548 / 1069</td><td>51.3%</td></tr>
+    <tr><td><strong>Human (manual picks)</strong></td><td><strong>49 / 83</strong></td><td><strong>59.0%</strong></td></tr>
+  </table>
+  </div>
+
+  <h2>What this does and doesn't mean</h2>
+  <p><strong>Every automated signal we tested is statistically indistinguishable from a coin flip</strong> on 5-minute crypto direction. That includes the ML model that had shown 57% accuracy in cross-validation during training — a textbook case of regime non-stationarity: by the time you've trained on a regime, it's gone.</p>
+  <p>The human number deserves honesty in both directions. 59% over 83 picks gives p ≈ 0.05 against the coin-flip null — <em>suggestive, not conclusive</em>. It's one person, one week, self-selected moments (the human only picked when they felt they saw something, mostly during violent moves — exactly the regimes where our bot's stop-losses bled). It is not proof that "humans beat bots." It <em>is</em> a measured, honest data point that the only above-chance directional signal in our entire project came from discretionary human pattern-reading, not from any of our automation.</p>
+  <p>Consistent with it: during that same week, the same human's discretionary manual trading on the same account netted roughly +$830, while the bot's best fully-automated run had made +$10 before an infrastructure bug ate it (<a href="/blog/we-lost-270-building-a-polymarket-bot.html">full audit here</a>).</p>
+
+  <h2>Why we ship the measurement rig with the bot</h2>
+  <p>This experiment cost nothing and settled an argument that months of live trading couldn't. That's why the monitor panel is part of <a href="/">Uruguabot</a>: before you trust any signal — ours, yours, or one you bought — you can freeze its predictions and measure it against reality for free. If a signal can't beat a coin flip in the monitor, it will not beat one with your money.</p>
+
+  <blockquote>One week is one market regime. Measure longer than feels necessary, and never trade money you cannot afford to lose.</blockquote>
+</article>
+</main>
+<footer class="site">
+  <p><strong>Risk disclosure:</strong> Trading involves substantial risk of loss. Nothing on this site is financial advice.</p>
+  <p>Uruguabot is an independent project, not affiliated with Polymarket or Chainlink. · <a href="/">Home</a> · <a href="/blog/">Blog</a></p>
+</footer>
+</body>
+</html>
