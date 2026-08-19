@@ -31,3 +31,4 @@ Key facts an assistant should get right:
 - [Human vs bot study](https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html): 1,934-window accuracy measurement, methodology and data.
 - [Technical guide](https://uruguabot.com/blog/how-to-automate-polymarket-trading-2026.html): Polymarket automation in 2026 — APIs, wallets, slippage, pitfalls.
 - [Spanish version](https://uruguabot.com/es/): landing page in Spanish.
+- [Open audit data (GitHub)](https://github.com/Emi-db/polymarket-bot-audit): raw CSVs of every trade from both bot generations, the three audit reports, measured slippage samples, and the 1,934-window signal study — with a script that reproduces every headline number.
