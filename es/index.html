@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Uruguabot — Bot de trading para mercados de 5 minutos de Polymarket (código fuente completo)</title>
-<meta name="description" content="Un bot de trading para los mercados Up/Down de 5 minutos de Polymarket, vendido con su historial real auditado — pérdidas incluidas. Código Python completo, compra única, sin suscripción.">
+<title>Uruguabot — Tu propio bot de Polymarket corriendo 24/7 (código completo, US$99)</title>
+<meta name="description" content="Tu propio bot de trading para Polymarket corriendo 24/7 en tu máquina. Instalado en 15 minutos y probado con dinero real: la configuración por defecto cerró en vivo con +7,3% de ROI, historial completo y público. US$99 una vez, sin suscripción.">
 <link rel="canonical" href="https://uruguabot.com/es/">
 <link rel="alternate" hreflang="en" href="https://uruguabot.com/">
 <link rel="alternate" hreflang="es" href="https://uruguabot.com/es/">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Uruguabot — Bot de trading para Polymarket 5 minutos">
-<meta property="og:description" content="El único bot de Polymarket que se vende con su historial completo auditado — pérdidas incluidas. Código completo, compra única.">
+<meta property="og:title" content="Uruguabot — Tu propio bot de Polymarket corriendo 24/7">
+<meta property="og:description" content="Instalado en 15 minutos y probado con dinero real: la config por defecto cerró en vivo con +7,3% de ROI, historial público. El código es tuyo por US$99, sin suscripción.">
 <meta property="og:url" content="https://uruguabot.com/es/">
 </head>
 <body>
@@ -27,22 +27,30 @@
 </header>
 <main>
   <section class="hero">
-    <h1>Un bot de trading para Polymarket vendido con su historial <em>real</em> — pérdidas incluidas.</h1>
-    <p class="lead">Uruguabot es un framework en Python, con código completo, para los mercados Up/Down de 5 minutos de Bitcoin en Polymarket. La mayoría de los bots se venden con capturas verdes truchas. Este se entrega con la historia completa y auditada de lo que hizo con dinero real.</p>
+    <h1>Tu propio bot de Polymarket, corriendo <em>24/7</em> en tu máquina.</h1>
+    <p class="lead">Instalado en 15 minutos. Probado con dinero real: la configuración que viene por defecto cerró su corrida en vivo con <strong>+7,3% de ROI</strong> — el historial completo es <a href="https://github.com/Emi-db/polymarket-bot-audit">público y verificable</a>. El código Python completo es tuyo por US$99: sin suscripción, sin telemetría, sin depender de nuestros servidores.</p>
     <div class="cta-row">
       <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Comprar el código completo — US$99</a>
-      <a class="btn secondary" href="#resultados">Ver los números honestos</a>
-      <span class="price">Compra única · Sin suscripción · Sin telemetría</span>
-    </div>
-    <div class="honest">
-      <strong>Leé esto antes de comprar.</strong>
-      Esto no es una máquina de imprimir plata. Nuestra propia corrida en vivo, 100% automática, fue pérdida neta en total. Solo una configuración fue rentable — es la que viene por defecto, con todos los números publicados abajo. Comprás infraestructura profesional de trading y lecciones caras documentadas, no ganancias garantizadas. Operar implica riesgo sustancial de pérdida.
+      <a class="btn secondary" href="#resultados">Ver el historial en vivo</a>
+      <span class="price">Compra única · Arranca en simulación · Pasa a real solo cuando vos decidas</span>
     </div>
   </section>
 
+  <section>
+    <h2>Corriendo en 15 minutos</h2>
+    <ol>
+      <li><strong>Instalá y arrancá — sin billetera.</strong> Tres comandos y el bot ya está encontrando mercados reales de 5 minutos y operándolos en simulación, con fills modelados con slippage medido de trades reales.</li>
+      <li><strong>Miralo trabajar.</strong> Cada apuesta registra el estado de las señales, 11 features del mercado y el fill simulado. El monitor incluido muestra la accuracy en vivo sin gastar un dólar.</li>
+      <li><strong>Pasá a real solo si te convence.</strong> El modo en vivo exige dos flags explícitos (<code>DRY_RUN=false</code> + <code>LIVE_CONFIRM=YES</code>), una billetera dedicada, y arranca con apuestas de $2 y frenos de riesgo activados.</li>
+    </ol>
+    <pre><code>pip install -r requirements.txt
+cp .env.example .env
+python uruguabot.py        # arranca en dry-run, sin dinero real</code></pre>
+  </section>
+
   <section id="resultados">
-    <h2>Los resultados reales y auditados</h2>
-    <p>Uruguabot operó dinero real en Polymarket en mayo de 2026, probando dos configuraciones de salida una tras otra. Resultados, verificados contra el historial exportado del propio exchange:</p>
+    <h2>Probado con dinero real — el historial auditado</h2>
+    <p>"Probado" acá no significa un backtest. Uruguabot operó dinero real en Polymarket en mayo de 2026, probando dos configuraciones de salida una tras otra. Resultados, verificados contra el historial exportado del propio exchange:</p>
     <div class="tablewrap">
     <table>
       <tr><th>Fase</th><th>Configuración</th><th>Aciertos</th><th>ROI</th></tr>
@@ -50,7 +58,9 @@
       <tr><td><strong>Hipótesis B</strong> (hoy el default)</td><td>SL apretado, winners a resolución</td><td>40%</td><td><strong>+7,3%</strong></td></tr>
     </table>
     </div>
-    <p class="price">El experimento completo igual fue pérdida neta — un bug de infraestructura (ya arreglado) costó más de lo que la estrategia ganó. Todos los números están en la <a href="/blog/we-lost-270-building-a-polymarket-bot.html">auditoría completa</a> (en inglés).</p>
+    <div class="honest">
+      <strong>El contexto honesto.</strong> El experimento completo igual fue pérdida neta — un bug de infraestructura (ya arreglado) costó más de lo que la estrategia ganó, y solo la configuración que hoy viene por defecto fue rentable. Todos los números, orden por orden, están en la <a href="/blog/we-lost-270-building-a-polymarket-bot.html">auditoría completa</a> (en inglés) y en el <a href="https://github.com/Emi-db/polymarket-bot-audit">repositorio abierto de datos</a>. Comprás infraestructura profesional y un mecanismo de salida validado, no ganancias garantizadas.
+    </div>
     <div class="grid">
       <div class="card"><h3>El edge es la asimetría, no la predicción</h3><p>La configuración rentable acertó solo el 39–40% de sus trades. Las pérdidas se cortaron en −$0,85 promedio; los ganadores se sostuvieron hasta resolución a +$2,46 promedio. Ese mecanismo — no una señal mágica — es lo que comprás.</p></div>
       <div class="card"><h3>La pérdida más grande fue un bug, no el mercado</h3><p>La API de posiciones de Polymarket tiene lag en mercados de 5 minutos. Órdenes que sí llenaron se abandonaban como "fantasmas": −$88, más que todo lo que ganó la estrategia. El fix viene activado.</p></div>
@@ -81,7 +91,7 @@
 </main>
 <footer class="site">
   <p><strong>Declaración de riesgos:</strong> Operar implica riesgo sustancial de pérdida. Los mercados de Polymarket son binarios y las posiciones resuelven con frecuencia a $0,00. El rendimiento pasado — bueno o malo — no predice resultados futuros. Nada en este sitio es consejo financiero. Nunca operes dinero que no puedas permitirte perder por completo.</p>
-  <p>Uruguabot es un proyecto independiente, sin afiliación con Polymarket ni Chainlink. · <a href="/docs.html">Docs</a> · <a href="/blog/">Blog</a> · <a href="/">English</a></p>
+  <p>Uruguabot es un proyecto independiente, sin afiliación con Polymarket ni Chainlink. · <a href="/docs.html">Docs</a> · <a href="/blog/">Blog</a> · <a href="/">English</a> · <a href="https://github.com/Emi-db/polymarket-bot-audit">Datos de la auditoría</a></p>
 </footer>
 <script data-goatcounter="https://uruguabot.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

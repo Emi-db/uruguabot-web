@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Uruguabot — Polymarket 5-Minute Trading Bot Framework (Full Source Code)</title>
-<meta name="description" content="A Polymarket trading bot for 5-minute BTC Up/Down markets, sold with its complete audited real-money record — losses included. Full Python source, one-time purchase, no subscription.">
+<title>Uruguabot — Your Own Polymarket Trading Bot, Running 24/7 (Full Source, $99)</title>
+<meta name="description" content="Run your own Polymarket trading bot 24/7 on your machine. Installed in 15 minutes, tested with real money: the default configuration closed its live run at +7.3% ROI, full record public. $99 one-time, no subscription.">
 <link rel="canonical" href="https://uruguabot.com/">
 <link rel="alternate" hreflang="en" href="https://uruguabot.com/">
 <link rel="alternate" hreflang="es" href="https://uruguabot.com/es/">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Uruguabot — Polymarket 5-Minute Trading Bot Framework">
-<meta property="og:description" content="The only Polymarket bot sold with its full audited record — losses included. Full source code, one-time purchase.">
+<meta property="og:title" content="Uruguabot — Your Own Polymarket Bot, Running 24/7">
+<meta property="og:description" content="Installed in 15 minutes, tested with real money: the default config closed its live run at +7.3% ROI, full record public. The code is yours for $99, no subscription.">
 <meta property="og:url" content="https://uruguabot.com/">
 <script type="application/ld+json">
 {
@@ -20,7 +20,7 @@
   "name": "Uruguabot",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Windows, Linux, macOS",
-  "description": "Python trading bot framework for Polymarket 5-minute crypto Up/Down markets. Ships with full source code and the complete audited record of its real-money testing, including losses.",
+  "description": "Python trading bot for Polymarket 5-minute crypto Up/Down markets that runs 24/7 on your own machine. Installed in minutes, dry-run by default, tested with real money with its complete record published. Sold as full source code, one-time purchase.",
   "url": "https://uruguabot.com/",
   "offers": {
     "@type": "Offer",
@@ -82,22 +82,30 @@
 </header>
 <main>
   <section class="hero">
-    <h1>A Polymarket trading bot sold with its <em>real</em> track record — losses included.</h1>
-    <p class="lead">Uruguabot is a full-source Python framework for Polymarket's 5-minute Bitcoin Up/Down markets. Most bots are sold with fake green screenshots. This one ships with the complete audited history of what it actually did with real money.</p>
+    <h1>Your own Polymarket bot, running <em>24/7</em> on your machine.</h1>
+    <p class="lead">Installed in 15 minutes. Tested with real money: the configuration that ships as the default closed its live run at <strong>+7.3% ROI</strong> — the complete record is <a href="https://github.com/Emi-db/polymarket-bot-audit">public and verifiable</a>. The full Python source is yours for $99: no subscription, no telemetry, no dependence on our servers.</p>
     <div class="cta-row">
       <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Get the full source — $99</a>
-      <a class="btn secondary" href="#results">See the honest numbers</a>
-      <span class="price">One-time purchase · No subscription · No telemetry</span>
-    </div>
-    <div class="honest">
-      <strong>Read this before buying.</strong>
-      This is not a money printer. Our own fully-automated live run was a net loss overall. Only one configuration was profitable — it ships as the default, with every number published below. You are buying professional trading infrastructure and expensive documented lessons, not guaranteed profits. Trading involves substantial risk of loss.
+      <a class="btn secondary" href="#results">See the live record</a>
+      <span class="price">One-time purchase · Starts in dry-run · Goes live only when you decide</span>
     </div>
   </section>
 
+  <section>
+    <h2>Running in 15 minutes</h2>
+    <ol>
+      <li><strong>Install and start — no wallet needed.</strong> Three commands, and the bot is finding real live 5-minute markets and trading them in simulation, with fills modeled on slippage measured from real trades.</li>
+      <li><strong>Watch it work.</strong> Every bet records the signal state, 11 market features and the simulated fill. The included monitor panel shows live accuracy without spending a dollar.</li>
+      <li><strong>Go live only if convinced.</strong> Live mode requires two explicit flags (<code>DRY_RUN=false</code> + <code>LIVE_CONFIRM=YES</code>), a dedicated wallet, and starts at $2 bets with circuit breakers on.</li>
+    </ol>
+    <pre><code>pip install -r requirements.txt
+cp .env.example .env
+python uruguabot.py        # starts in dry-run, no real money</code></pre>
+  </section>
+
   <section id="results">
-    <h2>The real, audited results</h2>
-    <p>Uruguabot traded real money on Polymarket in May 2026, testing two exit configurations back to back. Results, verified against the exchange's own trade history export:</p>
+    <h2>Proven with real money — the audited record</h2>
+    <p>"Tested" here doesn't mean a backtest. Uruguabot traded real money on Polymarket in May 2026, testing two exit configurations back to back. Results, verified against the exchange's own trade history export:</p>
     <div class="tablewrap">
     <table>
       <tr><th>Phase</th><th>Configuration</th><th>Win rate</th><th>ROI</th></tr>
@@ -105,7 +113,9 @@
       <tr><td><strong>Hypothesis B</strong> (now the default)</td><td>Tight SL, winners held to resolution</td><td>40%</td><td><strong>+7.3%</strong></td></tr>
     </table>
     </div>
-    <p class="price">The experiment as a whole was still a net loss — an infrastructure bug (since fixed) cost more than the strategy earned. Every number, order by order, is in <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the full audit</a>.</p>
+    <div class="honest">
+      <strong>The honest context.</strong> The live experiment as a whole was a net loss — an infrastructure bug (since fixed) cost more than the strategy earned, and only the configuration that now ships as the default was profitable. Every number, order by order, is in <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the full audit</a> and in the <a href="https://github.com/Emi-db/polymarket-bot-audit">open data repository</a>. You are buying professional infrastructure and a validated exit mechanism, not guaranteed profits.
+    </div>
     <p>Three facts matter more than any marketing page:</p>
     <div class="grid">
       <div class="card"><h3>The edge is asymmetry, not prediction</h3><p>The profitable configuration won only 39–40% of its trades. Losers were cut at −$0.85 average; winners were held to $1.00 resolution at +$2.46 average. That mechanism — not a magic signal — is what you're buying.</p></div>
@@ -125,18 +135,6 @@
       <div class="card"><h3>Signal accuracy monitor</h3><p>A local web panel that freezes predictions before each window and measures the real accuracy of every signal — including your own manual picks — without spending a dollar.</p></div>
       <div class="card"><h3>Ops tooling</h3><p>Wallet/auth checker, status reports, dry-vs-live drift measurement, orphan-share detector. ~15 readable Python files, bilingual docs (EN/ES).</p></div>
     </div>
-  </section>
-
-  <section>
-    <h2>How it works</h2>
-    <ol>
-      <li><strong>Dry-run first (default).</strong> The bot finds real live 5-minute markets and simulates trades with measured friction. No wallet needed.</li>
-      <li><strong>Study the log.</strong> Every bet records 11 market features, the signal state, and the simulated fill. Tooling included to analyze it.</li>
-      <li><strong>Go live only if convinced.</strong> Live mode requires two explicit flags (<code>DRY_RUN=false</code> + <code>LIVE_CONFIRM=YES</code>), a dedicated wallet, and starts at $2 bets with circuit breakers on.</li>
-    </ol>
-    <pre><code>pip install -r requirements.txt
-cp .env.example .env
-python uruguabot.py        # starts in dry-run, no real money</code></pre>
   </section>
 
   <section id="faq">
