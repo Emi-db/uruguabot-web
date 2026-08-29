@@ -6,6 +6,8 @@
 <title>Human vs Bot: We Measured Prediction Accuracy Over 1,934 Polymarket 5-Minute Windows</title>
 <meta name="description" content="One week, 1,934 Polymarket BTC/ETH 5-minute windows: momentum, mean-reversion, orderbook imbalance and an ML model all scored ~48-51% (coin flip). A human's manual picks scored 59%. Full methodology and data.">
 <link rel="canonical" href="https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html">
+<link rel="alternate" hreflang="en" href="https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html">
+<link rel="alternate" hreflang="x-default" href="https://uruguabot.com/blog/human-vs-bot-polymarket-accuracy.html">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Human vs Bot: Prediction Accuracy Over 1,934 Polymarket Windows">
@@ -42,6 +44,7 @@
     <a href="/docs.html">Docs</a>
     <a href="/blog/">Blog</a>
     <a href="/#results">Real results</a>
+    <a href="/#faq">FAQ</a>
     <a href="/es/">Español</a>
   </nav>
 </header>
@@ -80,6 +83,24 @@
 
   <h2>Why we ship the measurement rig with the bot</h2>
   <p>This experiment cost nothing and settled an argument that months of live trading couldn't. That's why the monitor panel is part of <a href="/">Uruguabot</a>: before you trust any signal — ours, yours, or one you bought — you can freeze its predictions and measure it against reality for free. If a signal can't beat a coin flip in the monitor, it will not beat one with your money.</p>
+
+  <div class="offer">
+    <h3>The measurement rig ships with the bot</h3>
+    <p>The panel that produced every number in this article is part of Uruguabot, and so is the bot it was measuring. Full Python source, one payment.</p>
+    <ul>
+      <li><strong>The monitor panel</strong> &mdash; freezes each signal&rsquo;s prediction before the window opens and scores it against the real outcome, including your own manual picks. It is read-only and never touches a wallet.</li>
+      <li><strong>The four signals scored above</strong>, plus the multi-timeframe consensus engine that combines them.</li>
+      <li><strong>The ML gate, shipped untrained and switched off</strong> &mdash; because 57% in training and 48&ndash;50% live is exactly what this article measured. You train it on your own regime or you leave it alone.</li>
+      <li><strong>The execution layer and the calibrated dry-run simulator</strong>, so a signal that survives measurement can be traded without paying our tuition again.</li>
+      <li><strong>21 Python files, bilingual docs, no subscription, no telemetry.</strong></li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=post_human_vs_bot" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'post_human_vs_bot'});}" data-goatcounter-click="checkout-post_human_vs_bot">Get the full source &mdash; $99</a>
+      <a class="btn secondary" href="/#results">See the audited record &rarr;</a>
+      <span class="price">One-time purchase &middot; No subscription &middot; Starts in dry-run</span>
+    </div>
+    <p class="qualifier">Read honestly, this article is an argument for measuring before trusting &mdash; and our own signals are the ones it found wanting. That is the point of shipping the rig: you can reach the same verdict about any signal, ours included, before a dollar is involved. You are buying the measurement and the plumbing. Finding an edge is still your job, and it may not be there &mdash; our own best live configuration finished at +7.3%, and that is not a track record.</p>
+  </div>
 
   <blockquote>One week is one market regime. Measure longer than feels necessary, and never trade money you cannot afford to lose.</blockquote>
 </article>

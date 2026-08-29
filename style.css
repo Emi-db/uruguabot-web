@@ -3,6 +3,7 @@
   --bg: #fafaf8; --fg: #1a1d21; --muted: #5c6470; --card: #ffffff;
   --border: #e3e5e8; --accent: #0e7c66; --accent-fg: #ffffff;
   --warn-bg: #fff7e6; --warn-border: #e6c26e; --code-bg: #f0f1f3;
+  --accent-soft: #f0f8f5; --accent-border: #bcded3; --scroll-shadow: rgba(0,0,0,.20); --warn-soft: #efe3c4;
   --max: 880px;
 }
 @media (prefers-color-scheme: dark) {
@@ -10,6 +11,7 @@
     --bg: #14171a; --fg: #e8eaed; --muted: #9aa3ad; --card: #1c2025;
     --border: #2c3238; --accent: #2fbf9c; --accent-fg: #0b0e10;
     --warn-bg: #2a2413; --warn-border: #7a6320; --code-bg: #23272c;
+    --accent-soft: #16241f; --accent-border: #2c4a41; --scroll-shadow: rgba(0,0,0,.55); --warn-soft: #3a3418;
   }
 }
 * { box-sizing: border-box; }
@@ -27,12 +29,18 @@ header.site {
 nav { display: flex; gap: 18px; flex-wrap: wrap; margin-left: auto; }
 nav a { color: var(--muted); text-decoration: none; font-size: .95rem; }
 nav a:hover { color: var(--fg); }
-h1 { font-size: 2.1rem; line-height: 1.2; letter-spacing: -.02em; margin: .6em 0 .4em; }
+h1 { font-size: 2.6rem; line-height: 1.12; letter-spacing: -.025em; margin: .5em 0 .35em; }
 h2 { font-size: 1.45rem; margin-top: 2em; letter-spacing: -.01em; }
 h3 { font-size: 1.1rem; margin-top: 1.6em; }
 a { color: var(--accent); }
 p.lead { font-size: 1.18rem; color: var(--muted); max-width: 620px; }
 .hero { padding: 40px 0 10px; }
+@media (max-width: 640px) {
+  .hero { padding-top: 14px; }
+  h1 { font-size: 2rem; margin: .3em 0 .3em; }
+  .hero p.lead { font-size: 1.04rem; margin: 0 0 .7em; }
+  .cta-row { margin: 18px 0 8px; }
+}
 .cta-row { display: flex; gap: 14px; align-items: center; margin: 26px 0 8px; flex-wrap: wrap; }
 .trust { color: var(--muted); font-size: .88rem; margin: 10px 0 0; }
 .trust a { color: var(--muted); }
@@ -48,16 +56,17 @@ p.lead { font-size: 1.18rem; color: var(--muted); max-width: 620px; }
 .btn.secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); }
 .price { color: var(--muted); font-size: .95rem; }
 .honest {
-  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  background: var(--warn-bg); border: 1px solid var(--warn-soft);
+  border-left: 3px solid var(--warn-border);
   border-radius: 10px; padding: 16px 20px; margin: 28px 0; font-size: .98rem;
 }
-.honest strong { display: block; margin-bottom: 4px; }
+.honest > strong:first-child { display: block; margin-bottom: 4px; }
 table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: .95rem; }
 th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
 th { color: var(--muted); font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
 .tablewrap { overflow-x: auto; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
-.card {
+.card, .seller, .checklist li {
   background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px;
 }
 .card h3 { margin: 0 0 6px; font-size: 1.02rem; }
@@ -85,3 +94,122 @@ blockquote { border-left: 3px solid var(--accent); margin: 1.4em 0; padding: 2px
 .postlist li { margin: 22px 0; }
 .postlist a { font-weight: 700; font-size: 1.12rem; text-decoration: none; }
 .postlist p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+
+/* ── Offer block: end-of-post / end-of-page product card ────────────────── */
+.offer {
+  background: var(--accent-soft); border: 1px solid var(--accent-border);
+  border-radius: 12px; padding: 22px 24px; margin: 40px 0 26px;
+}
+.offer h2, .offer h3 { margin: 0 0 8px; font-size: 1.14rem; letter-spacing: -.01em; }
+.offer > p { margin: 0 0 12px; font-size: .96rem; }
+.offer ul { margin: 0 0 16px; padding-left: 20px; font-size: .94rem; color: var(--muted); }
+.offer ul li { margin: 5px 0; }
+.offer ul li strong { color: var(--fg); font-weight: 600; }
+.offer .cta-row { margin: 0; }
+.offer .qualifier { color: var(--muted); font-size: .88rem; margin: 14px 0 0; }
+.offer-strip {
+  background: var(--accent-soft); border: 1px solid var(--accent-border);
+  border-radius: 12px; padding: 22px 24px; margin: 22px 0 6px; font-size: .95rem;
+}
+.offer-strip p { margin: 0; color: var(--muted); }
+.offer-strip strong { color: var(--fg); }
+
+/* ── Code artifacts ("read the code before you buy it") ─────────────────── */
+.codefig { margin: 26px 0; }
+.codefig pre { margin: 0; }
+.codefig figcaption { color: var(--muted); font-size: .88rem; margin: 9px 2px 0; }
+.codefig figcaption strong { color: var(--fg); font-weight: 600; }
+
+/* ── Seller / delivery / pre-flight checklist ───────────────────────────── */
+.seller { margin: 22px 0; }
+.seller p { margin: 0 0 10px; font-size: .96rem; }
+.seller p:last-child { margin-bottom: 0; }
+.seller ul { margin: 6px 0 0; padding-left: 20px; font-size: .94rem; color: var(--muted); }
+.seller ul li { margin: 5px 0; }
+.seller ul li strong { color: var(--fg); font-weight: 600; }
+.checklist { list-style: none; padding: 0; margin: 18px 0; }
+.checklist li { margin: 10px 0; font-size: .95rem; color: var(--muted); }
+.checklist li strong { display: block; margin-bottom: 3px; color: var(--fg); }
+.close-cta { margin: 28px 0 8px; }
+.disclosure { color: var(--muted); font-size: .87rem; margin: 8px 0 0; }
+
+/* ── Scroll affordance on wide code blocks (pure CSS, self-hiding) ───────── */
+pre {
+  background-image:
+    linear-gradient(to right,  var(--code-bg), var(--code-bg)),
+    linear-gradient(to right,  var(--scroll-shadow), rgba(0, 0, 0, 0)),
+    linear-gradient(to left,   var(--code-bg), var(--code-bg)),
+    linear-gradient(to left,   var(--scroll-shadow), rgba(0, 0, 0, 0));
+  background-position: left center, left center, right center, right center;
+  background-repeat: no-repeat;
+  background-size: 22px 100%, 13px 100%, 22px 100%, 13px 100%;
+  background-attachment: local, scroll, local, scroll;
+}
+
+
+/* ── Results tables: keep all four numeric columns readable at 375px ─────── */
+.cfg-inline { display: none; }
+.tablewrap {
+  background-image:
+    linear-gradient(to right, var(--bg), var(--bg)),
+    linear-gradient(to right, var(--scroll-shadow), rgba(0, 0, 0, 0)),
+    linear-gradient(to left,  var(--bg), var(--bg)),
+    linear-gradient(to left,  var(--scroll-shadow), rgba(0, 0, 0, 0));
+  background-position: left center, left center, right center, right center;
+  background-repeat: no-repeat;
+  background-size: 20px 100%, 12px 100%, 20px 100%, 12px 100%;
+  background-attachment: local, scroll, local, scroll;
+}
+@media (max-width: 640px) {
+  table th, table td { padding: 8px 4px; }
+  table td { font-size: .9rem; }
+  table th { font-size: .72rem; letter-spacing: 0; }
+  .col-cfg { display: none; }
+  .cfg-inline {
+    display: block; color: var(--muted); font-weight: 400;
+    font-size: .88em; margin-top: 3px;
+  }
+}
+
+/* ── Safety section is the centre of gravity: its H2 outranks the others ─── */
+#safety > h2, #seguridad > h2 { font-size: 1.85rem; line-height: 1.2; margin-top: 1.6em; }
+@media (max-width: 640px) { #safety > h2, #seguridad > h2 { font-size: 1.5rem; } }
+.safety-group { margin: 26px 0 0; }
+.safety-group h3 { font-size: 1.04rem; margin: 0 0 10px; }
+.safety-group ul { margin: 0; padding-left: 20px; }
+.safety-group li { margin: 7px 0; color: var(--muted); font-size: .95rem; }
+.safety-group li strong { color: var(--fg); font-weight: 600; }
+.safety-close { margin: 26px 0 16px; font-size: 1.02rem; }
+
+/* ── Trust chips, adjacent to the CTA ───────────────────────────────────── */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.chips li {
+  background: var(--accent-soft); border: 1px solid var(--accent-border);
+  border-radius: 999px; padding: 5px 12px; font-size: .85rem; color: var(--fg);
+}
+
+/* ── Mobile: crop the hero screenshot so the DRY-RUN badge is legible ───── */
+@media (max-width: 640px) {
+  /* Crop lands on the panel's own boundaries: the gutter left of the STATE card
+     (natural x~1470) to the panel's right edge, title bar down past the card.
+     Never cut a label mid-word. Width-invariant: offsets are % of the box. */
+  .hero-visual {
+    position: relative; aspect-ratio: 473 / 292; overflow: hidden;
+    border-radius: 12px; border: 1px solid var(--border);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .28);
+  }
+  .hero-visual img {
+    position: absolute; top: -4.1%; left: -312%;
+    width: 425%; max-width: none; height: auto;
+    border: 0; border-radius: 0; box-shadow: none;
+  }
+}
+
+/* ── Source file tree (docs): annotations wrap on narrow screens ─────────── */
+.t-l { display: block; }
+.t-c { color: var(--muted); }
+@media (max-width: 640px) {
+  .t-p { display: none; }
+  .t-c { display: block; padding-left: 4ch; white-space: pre-wrap; }
+  .t-w { display: block; white-space: pre-wrap; }
+}

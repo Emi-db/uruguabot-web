@@ -6,6 +6,8 @@
 <title>Uruguabot Docs — Setup, Configuration & Going Live</title>
 <meta name="description" content="How to install and run Uruguabot: dry-run setup in 10 minutes, configuration reference, going live safely, and troubleshooting. No wallet needed for dry-run.">
 <link rel="canonical" href="https://uruguabot.com/docs.html">
+<link rel="alternate" hreflang="en" href="https://uruguabot.com/docs.html">
+<link rel="alternate" hreflang="x-default" href="https://uruguabot.com/docs.html">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:image" content="https://uruguabot.com/assets/uruguabot-banner.png">
 <meta property="og:image:width" content="1280">
@@ -56,7 +58,7 @@ python uruguabot.py</code></pre>
   <h2>The default configuration is the validated one</h2>
   <p>The shipped <code>.env.example</code> is exactly the configuration that was profitable in our live testing ("Hypothesis B"):</p>
   <ul>
-    <li><strong>Asymmetric exits:</strong> stop-loss at execution price −10¢; winners held to $1.00/$0.00 resolution. Profitable at a 40% win rate because average wins were ~3× average losses.</li>
+    <li><strong>Asymmetric exits:</strong> stop-loss at execution price −10¢; winners held to $1.00/$0.00 resolution. Profitable at a 40% win rate because average wins were ~3× average losses &mdash; a validated mechanism rather than a proven ROI.</li>
     <li><strong>BTC only</strong> (<code>ASSETS=btc</code>): BTC outperformed ETH consistently in our measured data. ETH is opt-in.</li>
     <li><strong>SELL-consensus entries in the 0.55–0.70 price band</strong> — the tested band.</li>
     <li><strong>Volatility guard on</strong> (<code>MAX_VOL_2MIN=0.0018</code>): skips regimes where measured SL slippage exploded (median −2¢, worst decile −24¢).</li>
@@ -75,10 +77,61 @@ python uruguabot.py</code></pre>
   <h2>What's included</h2>
   <p>~15 core Python files: trading engine, CLOB V2 execution layer with ghost-fill protection, multi-timeframe signals, Chainlink oracle feed, optional ML gate with retraining script, calibrated dry-run simulator, risk rails, monitor panel, and ops tooling (<code>check_status.py</code>, <code>check_wallet.py</code>, <code>compare_dry_vs_live.py</code>, <code>diagnose_orphan_shares.py</code>). Plus bilingual READMEs, a full strategy &amp; results document, EULA and risk disclosure.</p>
 
+  <h2 id="source">Read the source before you buy it</h2>
+  <p>You are buying readable Python, so here is what that actually looks like &mdash; the real file listing, and one real function copied byte-for-byte out of the package. Nothing here is minified, obfuscated or compiled.</p>
+
+  <figure class="codefig">
+    <pre><code><span class="t-l"><span class="t-w">uruguabot/</span></span><span class="t-l"><span class="t-w">  # 21 Python files, 6735 lines, nothing compiled</span></span><span class="t-l"> </span><span class="t-l"><span class="t-w">  # core engine (15)</span></span><span class="t-l">    420  uruguabot.py<span class="t-p">               </span><span class="t-c"># main loop, market discovery, the 30s diagnostic funnel</span></span><span class="t-l">    608  urubot_actions.py<span class="t-p">          </span><span class="t-c"># evaluate / execute - every entry gate lives in here</span></span><span class="t-l">   1105  execution.py<span class="t-p">               </span><span class="t-c"># Polymarket CLOB V2: FOK buys, ghost-fill verification, exits</span></span><span class="t-l">    340  polymarket.py<span class="t-p">              </span><span class="t-c"># read-only Gamma client: slug generation, market discovery</span></span><span class="t-l">    154  signals.py<span class="t-p">                 </span><span class="t-c"># multi-timeframe consensus engine (30s / 1m / 5m)</span></span><span class="t-l">    171  market_features.py<span class="t-p">         </span><span class="t-c"># the 11 market features recorded at decision time</span></span><span class="t-l">    100  simulator.py<span class="t-p">               </span><span class="t-c"># dry-run fills drawn from the measured slippage distributions</span></span><span class="t-l">    144  price_feed.py<span class="t-p">              </span><span class="t-c"># price thread: Chainlink -&gt; Binance -&gt; Coinbase -&gt; CoinGecko</span></span><span class="t-l">    472  chainlink_feed.py<span class="t-p">          </span><span class="t-c"># reads Polymarket's own resolution oracle over public RPC</span></span><span class="t-l">    337  risk_rails.py<span class="t-p">              </span><span class="t-c"># daily-loss / losing-streak / unfilled-ratio circuit breakers</span></span><span class="t-l">    208  logger.py<span class="t-p">                  </span><span class="t-c"># atomic bet log: tmp + rename, keeps a .bak, survives a kill -9</span></span><span class="t-l">    247  brain.py<span class="t-p">                   </span><span class="t-c"># optional ML gate - ships untrained and off unless you enable it</span></span><span class="t-l">    292  retrain_v3.py<span class="t-p">              </span><span class="t-c"># retrains that gate on your own data</span></span><span class="t-l">    191  snipe.py<span class="t-p">                   </span><span class="t-c"># optional T-10s late entry on observed Chainlink delta (off)</span></span><span class="t-l">    659  monitor_server.py<span class="t-p">          </span><span class="t-c"># the local accuracy monitor that serves monitor.html</span></span><span class="t-l"> </span><span class="t-l"><span class="t-w">  # ops tooling (6)</span></span><span class="t-l">    302  check_wallet.py<span class="t-p">            </span><span class="t-c"># verifies wallet + auth before you are ever allowed to go live</span></span><span class="t-l">    387  check_status.py<span class="t-p">            </span><span class="t-c"># status report computed over the bet log</span></span><span class="t-l">    129  check_polymarket.py<span class="t-p">        </span><span class="t-c"># "what is Gamma answering right now?" diagnostic</span></span><span class="t-l">    188  compare_dry_vs_live.py<span class="t-p">     </span><span class="t-c"># measures dry-run vs live drift</span></span><span class="t-l">    112  diagnose_orphan_shares.py<span class="t-p">  </span><span class="t-c"># finds shares the bot bought but could not sell</span></span><span class="t-l">    169  close_stale_bets.py<span class="t-p">        </span><span class="t-c"># closes bets stuck OPEN when the monitor could not resolve them</span></span><span class="t-l"> </span><span class="t-l">   6735  total</span></code></pre>
+    <figcaption><strong>The whole package, file by file.</strong> Real <code>wc -l</code> counts of the shipped source &mdash; 15 core modules, 6 ops scripts, 6,735 lines. The grouping and the one-line comments were added by hand; the filenames and the line counts were not.</figcaption>
+  </figure>
+
+    <figure class="codefig">
+      <pre><code>                            else:
+                                # /positions no muestra las shares todavia. La
+                                # FUENTE DE VERDAD es el USDC: si la plata SALIO de
+                                # la wallet, el FOK llenó y las shares SON nuestras
+                                # (la data-api /positions laggea en mercados de 5m).
+                                # Solo es NO_MATCH si el USDC quedó intacto.
+                                now_usdc = self.get_balance_usdc()
+                                delta = None
+                                if (pre_usdc is not None and now_usdc is not None
+                                        and pre_usdc &gt;= 0 and now_usdc &gt;= 0):
+                                    delta = float(pre_usdc) - float(now_usdc)
+                                if delta is not None and delta &lt; bet_usd * 0.5:
+                                    # Plata intacta -&gt; el FOK realmente no matcheó.
+                                    return BuyResult(ok=False, no_match=True,
+                                        error=f"NO_MATCH (usdc intact, delta=${delta:.3f})")
+                                # Fix May 30: FILL REAL con lag de /positions. NO
+                                # abandonar (antes -&gt; GHOST_FILL, sin SL, perdida
+                                # del stake completo). Un FOK success llena al 100%,
+                                # asi que trackeamos las shares pedidas para que la
+                                # posicion reciba SL y monitoreo normal.
+                                spent = delta if delta is not None else bet_usd
+                                self.log.warn(
+                                    f"[exec] positions-api lag: FOK success + USDC "
+                                    f"-${spent:.2f} pero /positions={verified_size} "
+                                    f"({vmethod}). Asumo fill real de {shares} shares "
+                                    f"y trackeo la posicion para SL/monitoreo.")
+                                return BuyResult(
+                                    ok=True, exec_price=exec_price,
+                                    shares=shares, bet_usd=bet_usd,
+                                    order_id=str(order_id),
+                                    slippage=exec_price - chosen_price,
+                                    positions_lag=True)</code></pre>
+      <figcaption><strong>2. The fix for the bug that cost more than the strategy earned.</strong> <code>execution.py</code>, lines 684&ndash;715, copied byte-for-byte: original indentation, original comments, original &ldquo;Fix May 30&rdquo; note. This is the ghost-fill verification the <a href="/blog/we-lost-270-building-a-polymarket-bot.html">audit</a> is about &mdash; when Polymarket&rsquo;s <code>/positions</code> endpoint has not caught up, the USDC balance delta decides whether the order really filled, instead of the bot abandoning a live position with no stop-loss on it. And note the comments are in Spanish: the author is Argentine and wrote the trading core in his own language. The README, the strategy document and the config file are fully bilingual &mdash; the in-code comments are not. Better you know that now than after paying.</figcaption>
+    </figure>
+    <figure class="codefig">
+      <pre><code>git clone https://github.com/Emi-db/polymarket-bot-audit
+cd polymarket-bot-audit
+python analysis/compute_summary.py    # standard library only, nothing to install</code></pre>
+      <figcaption><strong>And you do not have to take the results table on trust either.</strong> The <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">audit repository</a> ships every fill from both bot generations, plus the 1,934-window signal study, as raw CSVs under CC BY 4.0 &mdash; losing rows included &mdash; and <code>compute_summary.py</code> (MIT, standard library only) recomputes every headline number from them, sample sizes included. No dependencies, no account. If our arithmetic is wrong, that script is how you find out.</figcaption>
+    </figure>
+
   <h2>Support policy</h2>
   <p>One-time purchase, sold as-is: no support service, no update subscription, no server dependency. The code is deliberately small and heavily commented so you can own and maintain it. That policy is what keeps the price at $99 instead of $99/month.</p>
+  <p><strong>Refunds:</strong> there are no refunds once the source has been downloaded &mdash; it is delivered source code. That is why dry-run is the default mode: you can run the real bot on real live markets, with no wallet and no money, for as long as you like before you buy.</p>
 
-  <p><a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Get Uruguabot — $99, one-time</a></p>
+  <p><a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=docs" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'docs'});}" data-goatcounter-click="checkout-docs">Get Uruguabot — $99, one-time</a></p>
 </article>
 </main>
 <footer class="site">

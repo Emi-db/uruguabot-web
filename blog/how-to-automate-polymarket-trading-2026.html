@@ -6,6 +6,8 @@
 <title>How to Automate Polymarket Trading in 2026 — An Honest Technical Guide</title>
 <meta name="description" content="Building a Polymarket trading bot in 2026: CLOB V2 APIs, proxy wallet auth, geographic restrictions, the positions-API lag, real slippage numbers, and the execution bugs that actually cost money.">
 <link rel="canonical" href="https://uruguabot.com/blog/how-to-automate-polymarket-trading-2026.html">
+<link rel="alternate" hreflang="en" href="https://uruguabot.com/blog/how-to-automate-polymarket-trading-2026.html">
+<link rel="alternate" hreflang="x-default" href="https://uruguabot.com/blog/how-to-automate-polymarket-trading-2026.html">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to Automate Polymarket Trading in 2026 — An Honest Technical Guide">
@@ -42,6 +44,7 @@
     <a href="/docs.html">Docs</a>
     <a href="/blog/">Blog</a>
     <a href="/#results">Real results</a>
+    <a href="/#faq">FAQ</a>
     <a href="/es/">Español</a>
   </nav>
 </header>
@@ -86,6 +89,24 @@
 
   <h2>Build vs buy</h2>
   <p>Everything in this guide is implementable from scratch — budget a few weeks and expect to pay some real-money tuition to bugs like the five above. If you'd rather start from infrastructure that already paid that tuition, <a href="/">Uruguabot</a> is our full source code: the CLOB V2 execution layer with every fix in this article, the calibrated simulator, risk rails, and the signal-measurement panel — sold once, with <a href="/blog/we-lost-270-building-a-polymarket-bot.html">its complete audited record</a>, losses included, and no profit promises.</p>
+
+  <div class="offer">
+    <h3>Or start from the code that already paid for these lessons</h3>
+    <p>Every bug in this guide is one we hit with real money. Uruguabot is the implementation with all five already fixed &mdash; full Python source, one payment, no subscription.</p>
+    <ul>
+      <li><strong>CLOB V2 execution layer</strong> &mdash; FOK buys, ghost-fill verification by USDC delta, on-chain balance fallback, 2-decimal share alignment, selling observed balances rather than theoretical ones.</li>
+      <li><strong>Asymmetric exits</strong> &mdash; the 40%-win-rate configuration described above, shipped as the default config.</li>
+      <li><strong>A dry-run simulator that draws its fills from measured slippage</strong>, so your backtest is not fiction in the specific way ours was.</li>
+      <li><strong>Risk rails and a volatility guard</strong>, on by default, plus the accuracy monitor for testing any signal for free.</li>
+      <li><strong>21 readable Python files, bilingual docs, no licence server, no telemetry.</strong></li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=post_technical_guide" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'post_technical_guide'});}" data-goatcounter-click="checkout-post_technical_guide">Get the full source &mdash; $99</a>
+      <a class="btn secondary" href="/docs.html">Read the setup docs &rarr;</a>
+      <span class="price">One-time purchase &middot; No subscription &middot; Starts in dry-run</span>
+    </div>
+    <p class="qualifier">This is infrastructure, not an edge. Every bug above is fixed in it, and none of that makes a strategy profitable &mdash; that decision stays yours. Our own live run finished down overall, with the default configuration the only part of it in the black at +7.3% ROI on a 40% win rate. The complete record, losses included, is public so you can judge it rather than take our word.</p>
+  </div>
 
   <blockquote>Trading involves substantial risk of loss. Polymarket positions regularly resolve to $0.00. Nothing here is financial advice.</blockquote>
 </article>

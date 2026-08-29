@@ -4,14 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uruguabot — Your Own Polymarket Trading Bot, Running 24/7 (Full Source, $99)</title>
-<meta name="description" content="Run your own Polymarket trading bot 24/7 on your machine. Installed in 15 minutes, tested with real money: the default configuration closed its live run at +7.3% ROI, full record public. $99 one-time, no subscription.">
+<meta name="description" content="Run your own Polymarket trading bot 24/7 on your machine. Installed in 15 minutes, tested with real money: the default configuration closed its live run at +7.3% ROI, with the full record public. $99 one-time, no subscription.">
 <link rel="canonical" href="https://uruguabot.com/">
 <link rel="alternate" hreflang="en" href="https://uruguabot.com/">
 <link rel="alternate" hreflang="es" href="https://uruguabot.com/es/">
+<link rel="alternate" hreflang="x-default" href="https://uruguabot.com/">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Uruguabot — Your Own Polymarket Bot, Running 24/7">
-<meta property="og:description" content="Installed in 15 minutes, tested with real money: the default config closed its live run at +7.3% ROI, full record public. The code is yours for $99, no subscription.">
+<meta property="og:description" content="Installed in 15 minutes, tested with real money: the default config closed its live run at +7.3% ROI, with the full record public. The code is yours for $99, no subscription.">
 <meta property="og:url" content="https://uruguabot.com/">
 <meta property="og:image" content="https://uruguabot.com/assets/uruguabot-banner.png">
 <meta property="og:image:width" content="1280">
@@ -21,17 +22,27 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": [
+    "SoftwareApplication",
+    "Product"
+  ],
   "name": "Uruguabot",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Windows, Linux, macOS",
-  "description": "Python trading bot for Polymarket 5-minute crypto Up/Down markets that runs 24/7 on your own machine. Installed in minutes, dry-run by default, tested with real money with its complete record published. Sold as full source code, one-time purchase.",
+  "description": "Python trading bot for Polymarket 5-minute crypto Up/Down markets that runs 24/7 on your own machine. Installed in 15 minutes, ships in dry-run mode by default, with circuit breakers and a $2 default stake. Tested with real money and its complete record published, losses included. Sold as full source code for a one-time price of 99 USD, with no subscription and no refunds after download.",
   "url": "https://uruguabot.com/",
   "offers": {
     "@type": "Offer",
     "price": "99",
     "priceCurrency": "USD",
-    "url": "https://whop.com/uruguabot/uruguabot-full-source-code"
+    "availability": "https://schema.org/InStock",
+    "url": "https://whop.com/uruguabot/uruguabot-full-source-code",
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+      "merchantReturnLink": "https://uruguabot.com/#get-it"
+    }
   }
 }
 </script>
@@ -42,33 +53,67 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is Uruguabot profitable?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Honestly: our fully-automated live test (May 2026) was a net loss overall. One configuration — asymmetric exits with a tight stop-loss, shipped as the default — was profitable (+7.3% ROI at a 40% win rate); no future performance is promised. You are buying trading infrastructure and documented lessons, not guaranteed profits."}
-    },
-    {
-      "@type": "Question",
-      "name": "What is Uruguabot?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Uruguabot is a Python trading bot framework for Polymarket's 5-minute Bitcoin Up/Down prediction markets. It includes a multi-timeframe signal engine, an execution layer for Polymarket's CLOB V2 with ghost-fill protection, a dry-run simulator calibrated with empirically measured slippage, risk circuit breakers, and a local monitoring panel. It is sold as full readable source code."}
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need to know how to code?",
-      "acceptedAnswer": {"@type": "Answer", "text": "You need to be comfortable running commands in a terminal and editing a configuration file. Installation is: pip install -r requirements.txt, copy the example config, run one Python script. Modifying the strategy requires Python knowledge."}
-    },
-    {
-      "@type": "Question",
-      "name": "Is there a subscription or ongoing fee?",
-      "acceptedAnswer": {"@type": "Answer", "text": "No. Uruguabot is a one-time purchase of the full source code. There is no subscription, no license server, no telemetry, and no dependency on our servers. It is sold as-is, with no support or update obligation — the code is small and readable so you can maintain it yourself."}
-    },
-    {
-      "@type": "Question",
-      "name": "Does it work in the United States?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Polymarket restricts trading from several jurisdictions, including the United States. You are responsible for checking Polymarket's current geographic restrictions and the laws of your jurisdiction before using the software. Uruguabot does not include any mechanism to evade geographic restrictions."}
+      "name": "What is the worst it can do while I am asleep?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With the shipped defaults it opens at most two positions of $2 each, each with a stop-loss at execution price minus 10 cents. If the day's losses reach 10%, or seven trades lose in a row, or 80% of the last 20 orders fail to fill, it pauses itself, and that pause is written to disk so restarting the machine does not clear it. It auto-resumes after 30 minutes by default, or holds the pause indefinitely if you set RISK_AUTO_RESUME_MINUTES=0. The real ceiling is that it can spend whatever is in the wallet whose private key you put in the .env file, so a dedicated wallet with a small balance is the documented setup."
+      }
     },
     {
       "@type": "Question",
       "name": "Can it trade with fake money first?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Yes — the bot starts in dry-run mode by default: it discovers real live markets and simulates fills using slippage distributions measured from real trades. Live trading requires deliberately setting two separate flags, and risk circuit breakers are enabled by default."}
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — the bot starts in dry-run mode by default: it discovers real live markets and simulates fills using slippage distributions measured from real trades. Live trading requires deliberately setting two separate flags, and risk circuit breakers are enabled by default."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Uruguabot profitable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Honestly: our fully-automated live test (May 2026) was a net loss overall. One configuration — asymmetric exits with a tight stop-loss, shipped as the default — was profitable (+7.3% ROI at a 40% win rate), which the shipped documentation calls a validated mechanism rather than a proven ROI; no future performance is promised. You are buying trading infrastructure and documented lessons, not guaranteed profits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to know how to code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need to be comfortable running commands in a terminal and editing a configuration file. Installation is: pip install -r requirements.txt, copy the example config, run one Python script. Modifying the strategy requires Python knowledge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work in the United States?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Polymarket restricts trading from several jurisdictions, including the United States. You are responsible for checking Polymarket's current geographic restrictions and the laws of your jurisdiction before using the software. Uruguabot does not include any mechanism to evade geographic restrictions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a subscription or ongoing fee?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Uruguabot is a one-time purchase of the full source code. There is no subscription, no license server, no telemetry, and no dependency on our servers. It is sold as-is, with no support or update obligation — the code is small and readable so you can maintain it yourself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost, and are there refunds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Uruguabot costs 99 US dollars as a one-time purchase of the full source code. There is no subscription. There are no refunds once the source has been downloaded, because it is delivered source code; this is stated on the landing page rather than only at checkout. Dry-run mode is the default and needs no wallet or funds, so the software can be evaluated on real live markets before purchase."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are you selling it if it works?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because the honest answer to \"does it work?\" is \"the mechanism is validated, but the edge is thin\". The live experiment was a net loss overall; the configuration that ships as the default was profitable at +7.3% ROI. That is a validated mechanism, not a proven ROI. We would rather sell the infrastructure openly than pretend otherwise."
+      }
     }
   ]
 }
@@ -95,73 +140,215 @@
 </header>
 <main>
   <section class="hero">
-    <h1>Your own Polymarket bot, running <em>24/7</em> on your machine.</h1>
-    <p class="lead">Installed in 15 minutes. Tested with real money: the configuration that ships as the default closed its live run at <strong>+7.3% ROI</strong> — the complete record is <a href="https://github.com/Emi-db/polymarket-bot-audit">public and verifiable</a>. The full Python source is yours for $99: no subscription, no telemetry, no dependence on our servers.</p>
+    <h1>You already trade the 5-minute markets. This trades them while you sleep.</h1>
+    <p class="lead">A Python bot that runs Polymarket's 5-minute crypto markets on your own machine, around the clock. It installs in 15 minutes and <strong>starts in simulation</strong> &mdash; no wallet, no funds, no account &mdash; so you can watch it trade live markets for a week before it ever touches money.</p>
+    <p class="lead">Tested with real money: the configuration it ships with closed its live run at +7.3% ROI, with the complete record published. Then the code is yours for <strong>$99, one time</strong> &mdash; no subscription, no licence server, no telemetry, nothing anybody can switch off remotely.</p>
     <div class="cta-row">
-      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code">Get the full source — $99</a>
-      <a class="btn secondary" href="#results">See the live record</a>
-      <span class="price">One-time purchase · Starts in dry-run · Goes live only when you decide</span>
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=hero" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'hero'});}" data-goatcounter-click="checkout-hero">Get the bot &mdash; $99 once</a>
+      <a class="btn secondary" href="#safety">See what it does before you pay</a>
     </div>
-    <p class="trust">Listed on <a href="https://polbots.com/bot/uruguabot" rel="noopener">POLBOTS.COM</a> · Open data on <a href="https://github.com/Emi-db/polymarket-bot-audit">GitHub</a> · Record verified against the exchange's trade export</p>
+    <ul class="chips">
+      <li>Starts in dry-run</li>
+      <li>$2 default stake</li>
+      <li>Circuit breakers on</li>
+      <li>Runs on your machine</li>
+    </ul>
+    <p class="trust">Listed on <a href="https://polbots.com/bot/uruguabot" rel="noopener">POLBOTS.COM</a> &middot; Open data on <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">GitHub</a> &middot; Record computed from the bot's own fill log, published per order</p>
     <div class="hero-visual">
       <img src="/assets/hero-monitor.png" alt="The Uruguabot signal monitor running in dry-run mode: live signals with measured accuracy, simulated bets, and the audited +7.3% ROI record" width="2000" height="1480">
     </div>
   </section>
 
+  <section id="safety">
+    <h2>How much can it lose before something stops it?</h2>
+    <div class="honest">
+      <strong>This bot can lose money.</strong> Ours did: the live experiment was a net loss overall, and the only configuration that made money is the one that ships as the default, at <strong>+7.3% ROI</strong>. So the question worth answering isn't whether it can lose. It's <strong>how much it can lose before something stops it</strong> &mdash; and every limit below ships switched on.
+    </div>
+
+    <div class="safety-group">
+      <h3>1. It does not start with your money</h3>
+      <ul>
+        <li><strong>Ships <code>DRY_RUN=true</code>.</strong> Out of the box it finds real live 5-minute markets and trades them in simulation. No wallet, no funds, no account needed to evaluate it.</li>
+        <li><strong>The simulation is not flattering.</strong> Fills are drawn from slippage measured on real trades &mdash; &minus;1.2&cent; entry, &minus;1.3&cent; stop-loss, &minus;8.8&cent; take-profit on average &mdash; not zero-friction fantasy fills.</li>
+        <li><strong>Going live takes two separate flags.</strong> <code>DRY_RUN=false</code> <em>and</em> <code>LIVE_CONFIRM=YES</code>. It refuses to start live without both.</li>
+        <li><strong>And a dress rehearsal first.</strong> <code>check_wallet.py</code> verifies your auth and balances without placing a trade that could fill.</li>
+      </ul>
+    </div>
+
+    <div class="safety-group">
+      <h3>2. You set the ceiling, and it is small by default</h3>
+      <ul>
+        <li><strong><code>BET_USD=2</code> and <code>MAX_OPEN_POSITIONS=2</code></strong> &mdash; about $4 exposed at any one moment, out of the box.</li>
+        <li><strong>A stop-loss on every position</strong> at execution price &minus;10&cent; (<code>SL_DELTA=0.10</code>), not a mental one.</li>
+        <li><strong>The honest limit:</strong> the bot can spend whatever you fund it with. It only ever touches the wallet whose key is in your <code>.env</code>, so use a dedicated Polymarket wallet with a small balance. Nothing in software can protect a wallet you overfunded.</li>
+      </ul>
+    </div>
+
+    <div class="safety-group">
+      <h3>3. It stops itself</h3>
+      <ul>
+        <li><strong>Three circuit breakers, on by default:</strong> 10% daily loss, 7 consecutive losses, or 80% of the last 20 orders going unfilled. Any one of them pauses trading.</li>
+        <li><strong>The pause survives a restart.</strong> It is written to disk, so rebooting does not accidentally un-pause a bot that stopped itself for a reason.</li>
+        <li><strong>It auto-resumes after 30 minutes</strong> (<code>RISK_AUTO_RESUME_MINUTES=30</code>). Set that to <code>0</code> and the pause holds until you lift it by hand.</li>
+        <li><strong>A volatility guard sits out the violent regimes</strong> where measured stop-loss slippage hit &minus;24&cent; at the worst decile instead of the usual &minus;2&cent;.</li>
+      </ul>
+    </div>
+
+    <div class="safety-group">
+      <h3>4. It never touches anything you did not give it</h3>
+      <ul>
+        <li><strong>It will not adopt a position it did not open. Ever.</strong> That is deliberate: on the previous bot, auto-adoption managed the owner's own manual bets into the ground &mdash; about $591 in three days.</li>
+        <li><strong>Fills are verified by USDC balance delta</strong>, so an order that really filled can't be written off as a ghost and left running with no stop-loss on it.</li>
+        <li><strong>The bet log is written atomically</strong> (temp file + rename, keeping a <code>.bak</code>), so a hard kill mid-write cannot corrupt your trade history.</li>
+        <li><strong>Nothing leaves your machine.</strong> No telemetry, no licence server, no account. Your private key stays in your <code>.env</code>.</li>
+      </ul>
+    </div>
+
+    <p class="safety-close">Every one of those limits ships switched on, and you can watch all of them work in dry-run before a dollar is involved.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=safety_footer" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'safety_footer'});}" data-goatcounter-click="checkout-safety_footer">Get the bot &mdash; $99 once</a>
+      <span class="price">$99, one-time &middot; starts in dry-run &middot; no subscription</span>
+    </div>
+  </section>
+
   <section>
     <h2>Running in 15 minutes</h2>
-    <ol>
-      <li><strong>Install and start — no wallet needed.</strong> Three commands, and the bot is finding real live 5-minute markets and trading them in simulation, with fills modeled on slippage measured from real trades.</li>
-      <li><strong>Watch it work.</strong> Every bet records the signal state, 11 market features and the simulated fill. The included monitor panel shows live accuracy without spending a dollar.</li>
-      <li><strong>Go live only if convinced.</strong> Live mode requires two explicit flags (<code>DRY_RUN=false</code> + <code>LIVE_CONFIRM=YES</code>), a dedicated wallet, and starts at $2 bets with circuit breakers on.</li>
-    </ol>
+    <p>Three commands and it is trading live markets in simulation. Every bet records the signal state, 11 market features and the simulated fill; the included monitor panel shows accuracy in real time without spending a dollar.</p>
     <pre><code>pip install -r requirements.txt
 cp .env.example .env
 python uruguabot.py        # starts in dry-run, no real money</code></pre>
-  </section>
-
-  <section id="results">
-    <h2>Proven with real money — the audited record</h2>
-    <p>"Tested" here doesn't mean a backtest. Uruguabot traded real money on Polymarket in May 2026, testing two exit configurations back to back. Results, verified against the exchange's own trade history export:</p>
-    <div class="tablewrap">
-    <table>
-      <tr><th>Phase</th><th>Configuration</th><th>Win rate</th><th>ROI</th></tr>
-      <tr><td>Hypothesis A</td><td>Symmetric TP/SL</td><td>49%</td><td>−10.0%</td></tr>
-      <tr><td><strong>Hypothesis B</strong> (now the default)</td><td>Tight SL, winners held to resolution</td><td>40%</td><td><strong>+7.3%</strong></td></tr>
-    </table>
-    </div>
-    <div class="honest">
-      <strong>The honest context.</strong> The live experiment as a whole was a net loss — an infrastructure bug (since fixed) cost more than the strategy earned, and only the configuration that now ships as the default was profitable. Every number, order by order, is in <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the full audit</a> and in the <a href="https://github.com/Emi-db/polymarket-bot-audit">open data repository</a>. You are buying professional infrastructure and a validated exit mechanism, not guaranteed profits.
-    </div>
-    <p>Three facts matter more than any marketing page:</p>
-    <div class="grid">
-      <div class="card"><h3>The edge is asymmetry, not prediction</h3><p>The profitable configuration won only 39–40% of its trades. Losers were cut at −$0.85 average; winners were held to $1.00 resolution at +$2.46 average. That mechanism — not a magic signal — is what you're buying.</p></div>
-      <div class="card"><h3>The biggest loss was a bug, not the market</h3><p>Polymarket's positions API lags 5-minute markets. Orders that actually filled were abandoned as "ghosts": −$88, more than the strategy earned. The fix (USDC-delta verification + on-chain balance fallback) ships enabled.</p></div>
-      <div class="card"><h3>The ML model never beat a coin flip</h3><p>48–50% live accuracy despite 57% in training. We ship the brain untrained and optional, so you train it on your own current-regime data — or leave it off.</p></div>
-    </div>
-    <p>Full story with every number: <a href="/blog/we-lost-270-building-a-polymarket-bot.html">“We lost $270 building a Polymarket bot — the complete audit”</a>.</p>
+    <p>The shipped <code>.env.example</code> is already the configuration that was profitable in live testing &mdash; BTC only, tight asymmetric stop, guards on. You are not starting from a blank template.</p>
   </section>
 
   <section>
-    <h2>What's in the box</h2>
+    <h2>What it does while you're not watching</h2>
     <div class="grid">
       <div class="card"><h3>Trading engine</h3><p>Market discovery, multi-timeframe consensus signals (30s/1m/5m), entry gates, asymmetric exit management.</p></div>
       <div class="card"><h3>Execution layer (CLOB&nbsp;V2)</h3><p>FOK orders with ghost-fill detection via USDC-delta, stale-read handling, 2-decimal share alignment, on-chain balance fallback.</p></div>
-      <div class="card"><h3>Honest dry-run simulator</h3><p>Simulated fills use slippage distributions measured from real trades (entry −1.2¢, SL −1.3¢, TP −8.8¢ mean) — not zero-friction fantasy.</p></div>
-      <div class="card"><h3>Risk rails + volatility guard</h3><p>Daily-loss, losing-streak and unfilled-ratio circuit breakers, plus a guard that skips violent regimes where stop-losses slip up to −24¢. All on by default.</p></div>
-      <div class="card"><h3>Signal accuracy monitor</h3><p>A local web panel that freezes predictions before each window and measures the real accuracy of every signal — including your own manual picks — without spending a dollar.</p></div>
+      <div class="card"><h3>Honest dry-run simulator</h3><p>Simulated fills use slippage distributions measured from real trades (entry &minus;1.2&cent;, SL &minus;1.3&cent;, TP &minus;8.8&cent; mean) &mdash; not zero-friction fantasy.</p></div>
+      <div class="card"><h3>Signal accuracy monitor</h3><p>A local web panel that freezes predictions before each window and measures the real accuracy of every signal &mdash; including your own manual picks &mdash; without spending a dollar.</p></div>
       <div class="card"><h3>Ops tooling</h3><p>Wallet/auth checker, status reports, dry-vs-live drift measurement, orphan-share detector. ~15 readable Python files, bilingual docs (EN/ES).</p></div>
+    </div>
+  </section>
+
+  <section id="prediction">
+    <h2>The best predictor we measured was a human</h2>
+    <p>We froze every signal's prediction before the window opened and scored it against the actual outcome, over <strong>1,934 resolved 5-minute windows</strong>. The automated signals were coin flips:</p>
+    <div class="tablewrap">
+    <table>
+      <tr><th>Predictor</th><th>Windows scored</th><th>Accuracy</th></tr>
+      <tr><td>ML model (the &ldquo;brain&rdquo;)</td><td>308</td><td>48.1%</td></tr>
+      <tr><td>Momentum</td><td>1,834</td><td>48.8%</td></tr>
+      <tr><td>Mean reversion</td><td>1,500</td><td>49.6%</td></tr>
+      <tr><td>Orderbook imbalance</td><td>1,069</td><td>51.3%</td></tr>
+      <tr><td><strong>A human's manual picks</strong></td><td>83</td><td><strong>59.0%</strong></td></tr>
+    </table>
+    </div>
+    <p>83 picks at 59% gives p&nbsp;&asymp;&nbsp;0.05 against a coin flip &mdash; <em>suggestive, not conclusive</em>, and one person over one week. But it is the only above-chance directional signal in the entire project, and it did not come from the automation.</p>
+    <p><strong>So this bot is not sold on out-predicting you.</strong> It is sold on doing the part you cannot do by hand: sitting on the market around the clock, taking every qualifying window, and cutting losers at a fixed &minus;10&cent; without arguing with itself &mdash; the exit discipline that made the default configuration profitable at a 40% win rate. The prediction edge, if you have one, is still yours.</p>
+    <p>Which is also why the monitor panel scores <em>your</em> manual picks alongside the bot's signals, free, on live markets, with no wallet connected. If your read beats the machine's, that is worth knowing before you automate anything. <a href="/blog/human-vs-bot-polymarket-accuracy.html">Full methodology and data</a>.</p>
+  </section>
+
+  <section id="results">
+    <h2>Tested with real money &mdash; the audited record</h2>
+
+    <!-- TODO(owner): this page used to say the record was "verified against the exchange's own trade
+         history export". It has been downgraded to what the published data actually supports, because
+         the audit repo contains no reconciliation artifact - compute_summary.py reads the bot's own
+         fill log (live_trades_uruguabot.csv), which is telemetry, not an exchange file. On a page whose
+         central story is a ghost-fill bug where the bot's accounting disagreed with reality by $95,
+         "the log says X" and "the exchange confirms X" are exactly the distinction that matters.
+         Two ways to make the stronger claim honestly, if you want it back:
+           (a) BEST - publish the reconciliation (or a table derived from it) to the audit repository
+               and link it here. That turns this from a liability into another checkable item.
+           (c) If you did reconcile it by hand but cannot publish the file, say precisely that and why,
+               e.g. "Reconciled by hand against the exchange's trade history; the export is not
+               published because it carries wallet identifiers." A stated reason for not publishing
+               is itself credible, and matches this page's voice.
+         Do not restore the original wording without doing (a) or (c). -->
+    <p>Not a backtest. Uruguabot traded real money on Polymarket in May 2026, testing two exit configurations back to back. Results, computed from the bot's own fill log &mdash; every order published, row by row, in the <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">audit repository</a>:</p>
+    <div class="tablewrap">
+    <table>
+      <tr><th>Phase</th><th class="col-cfg">Configuration</th><th>Win rate</th><th>ROI</th></tr>
+      <tr><td>Hypothesis A<span class="cfg-inline">Symmetric TP/SL</span></td><td class="col-cfg">Symmetric TP/SL</td><td>49%</td><td>−10.0%</td></tr>
+      <tr><td><strong>Hypothesis B</strong> (now the default)<span class="cfg-inline">Tight SL, winners held to resolution</span></td><td class="col-cfg">Tight SL, winners held to resolution</td><td>40%</td><td><strong>+7.3%</strong></td></tr>
+    </table>
+    </div>
+    <div class="honest">
+      <strong>The honest context.</strong> The live experiment as a whole was a net loss — an infrastructure bug (since fixed) cost more than the strategy earned, and only the configuration that now ships as the default was profitable. Every number, order by order, is in <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the full audit</a> and in the <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">open data repository</a>. You are buying professional infrastructure and a validated exit mechanism, not guaranteed profits. The documentation inside the product calls it a validated mechanism, not a proven ROI, and <code>compute_summary.py</code> in the audit repository recomputes every figure in this table straight from the raw trade data.
+    </div>
+    <ul>
+      <li><strong>The edge is asymmetry, not prediction.</strong> The profitable configuration won only 40% of its trades: losers cut at &minus;$0.85 average, winners held to $1.00 resolution at +$2.46 average. That mechanism is what ships.</li>
+      <li><strong>The biggest loss was a bug, not the market.</strong> Polymarket's positions API lags 5-minute markets, so filled orders were abandoned as &ldquo;ghosts&rdquo;: &minus;$88, more than the strategy earned. The fix &mdash; USDC-delta verification plus on-chain balance fallback &mdash; ships enabled.</li>
+      <li><strong>The ML model never beat a coin flip.</strong> 48&ndash;50% live accuracy against 57% in training, so the brain ships untrained and optional. Train it on your own data or leave it off.</li>
+    </ul>
+    <p>Every number, and how we lost the money: <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the complete audit</a>. And <strong>6,735 lines of Python, nothing compiled or obfuscated</strong> &mdash; <a href="/docs.html#source">the full file list and a real function from the execution layer</a> are in the docs, before you pay.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=results_footer" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'results_footer'});}" data-goatcounter-click="checkout-results_footer">Get the bot &mdash; $99 once</a>
+      <span class="price">$99, one-time &middot; starts in dry-run &middot; no subscription</span>
     </div>
   </section>
 
   <section id="faq">
     <h2>Frequently asked questions</h2>
-    <details><summary>Is Uruguabot profitable?</summary><p>Honestly: our fully-automated live test was a net loss overall. One configuration — the shipped default — was profitable (+7.3% ROI at a 40% win rate); no future performance is promised. You're buying infrastructure and documented lessons, not guaranteed profits.</p></details>
-    <details><summary>Do I need to know how to code?</summary><p>You need to be comfortable with a terminal and editing a config file. Install is three commands. Modifying the strategy requires Python.</p></details>
-    <details><summary>Is there a subscription, license server, or telemetry?</summary><p>No, no, and no. One-time purchase, full source, runs entirely on your machine. Sold as-is with no support obligation — the code is deliberately small so you can own it.</p></details>
-    <details><summary>Does it work in the United States?</summary><p>Polymarket restricts trading from several jurisdictions including the US. Check Polymarket's current geographic restrictions and your local laws before buying. The bot includes no mechanism to evade geo-restrictions.</p></details>
+    <details><summary>What is the worst it can do while I am asleep?</summary><p>With the shipped defaults: open at most two positions of $2 each, each with a stop-loss at execution &minus;10&cent;. If the day's losses reach 10%, or seven trades lose in a row, or 80% of the last 20 orders fail to fill, it pauses itself &mdash; and that pause is written to disk, so restarting the machine does not clear it. The real ceiling, stated plainly: it can spend whatever is in the wallet whose key you put in <code>.env</code>. Use a dedicated wallet, funded small.</p></details>
     <details><summary>Can I test it without money?</summary><p>Yes — dry-run is the default mode, with fills simulated using empirically measured slippage. The monitor panel also measures signal accuracy in real time without trading.</p></details>
+    <details><summary>Is Uruguabot profitable?</summary><p>Honestly: our fully-automated live test was a net loss overall. One configuration — the shipped default — was profitable (+7.3% ROI at a 40% win rate); the documentation in the product calls it a validated mechanism, not a proven ROI. No future performance is promised. You're buying infrastructure and documented lessons, not guaranteed profits.</p></details>
+    <details><summary>Do I need to know how to code?</summary><p>You need to be comfortable with a terminal and editing a config file. Install is three commands. Modifying the strategy requires Python.</p></details>
+    <details><summary>Does it work in the United States?</summary><p>Polymarket restricts trading from several jurisdictions including the US. Check Polymarket's current geographic restrictions and your local laws before buying. The bot includes no mechanism to evade geo-restrictions.</p></details>
+    <details><summary>Is there a subscription, license server, or telemetry?</summary><p>No, no, and no. One-time purchase, full source, runs entirely on your machine. Sold as-is with no support obligation — the code is deliberately small so you can own it.</p></details>
     <details><summary>Why are you selling it if it works?</summary><p>Because the honest answer to "does it work?" is "the mechanism is validated, but the edge is thin" — and that sentence doesn't sell hedge funds, it sells tooling. We'd rather sell the infrastructure openly than pretend. The full reasoning is in <a href="/blog/we-lost-270-building-a-polymarket-bot.html">the audit article</a>.</p></details>
+  </section>
+
+  <section id="get-it">
+    <h2>What $99 gets you</h2>
+
+    <h3>A bot you own, not a subscription you rent</h3>
+    <div class="seller">
+      <p><strong>$99 once.</strong> A bot you rent at $99 a month costs $1,188 in the first year, and stops working the month you stop paying. This one keeps running whether or not I do.</p>
+      <!-- TODO(owner): the competitor line below is staged but commented out. Re-verify the price on
+           the day you publish and uncomment it only if it still checks out; delete it if it does not.
+           Do not name or characterise the competitor beyond this factual sentence.
+      <p>The closest comparable product sells for $499 (checked August 2026). It publishes no results at all.</p>
+      -->
+      <p>No licence server, no telemetry, no account to keep alive &mdash; so nobody can raise the price on you, deprecate it or switch it off, and if this site disappears tomorrow your copy keeps trading. That works because there is no company here to feed: <a href="https://github.com/Emi-db" rel="noopener">one developer in Argentina</a>, working alone, who wrote the bot, ran real money through it and wrote this page. A one-person project cannot honestly promise a support SLA, so it does not: sold as-is, deliberately small and heavily commented so you can maintain it without me.</p>
+    </div>
+
+    <h3>What arrives when you pay</h3>
+    <div class="seller">
+      <p>You buy on Whop and the download unlocks immediately &mdash; not a waitlist, not a Discord invite, not a licence key to activate. One zip, <code>Uruguabot-1.0.zip</code>: <strong>33 files</strong>, about 110&nbsp;KB.</p>
+      <ul>
+        <li><strong>21 Python modules</strong> &mdash; the whole trading core plus the ops scripts, full source, nothing compiled.</li>
+        <li><strong><code>.env.example</code></strong>, preloaded with the configuration that was profitable in the live test (BTC only, tight asymmetric stop, guards on), and <strong><code>data/empirical_slippage.json</code></strong>, the measured distributions the simulator draws its fills from.</li>
+        <li><strong><code>monitor.html</code> + <code>monitor_server.py</code></strong> (the read-only accuracy panel) and <strong><code>START_DRYRUN.bat</code> + <code>start_dryrun.sh</code></strong> for a one-command start on Windows or Linux/macOS.</li>
+        <li><strong><code>README.md</code> + <code>README_ES.md</code></strong> (full docs, EN and ES), <strong><code>STRATEGY_AND_RESULTS.md</code></strong> with the real live numbers including the losing phase, plus <code>CHANGELOG.md</code> and <code>requirements.txt</code> (five public packages).</li>
+        <li><strong><code>legal/EULA.txt</code> + <code>legal/RISK_DISCLOSURE.md</code></strong> &mdash; licence terms and risk disclosure, in the package, readable before you run anything.</li>
+      </ul>
+    </div>
+
+    <h3>Who should not buy this</h3>
+    <p>If any of these is a no, do not buy it. We would rather lose the sale than take your money for something you cannot run.</p>
+    <ol class="checklist">
+      <li><strong>Python 3.11+, on Windows, Linux or macOS.</strong> No Docker, no build step, no compiler.</li>
+      <li><strong>Polymarket has to be reachable from your jurisdiction.</strong> It restricts trading from several, <strong>including the United States</strong> &mdash; check its current restrictions and your local law <em>before</em> paying. There is no mechanism here to evade them and we will not help you build one. If Polymarket does not serve you, dry-run alone is not worth $99.</li>
+      <li><strong>You are comfortable in a terminal and editing a config file.</strong> You do not need to write Python to run it; you do to change the strategy. No GUI installer, and nobody to call.</li>
+    </ol>
+
+    <h3>Refunds</h3>
+    <div class="seller">
+      <p><strong>There are no refunds once the source has been downloaded.</strong> It is delivered source code &mdash; once you have the files, you have them. You are being told that here, on the page, rather than discovering it at the Whop checkout screen.</p>
+      <p>That is exactly why dry-run mode exists and why it is the default: you can run the real bot on real live markets, with no wallet and no money, for as long as you like before you decide. Evaluate it first, then buy it.</p>
+    </div>
+
+    <div class="offer close-cta">
+      <h3>Get the bot</h3>
+      <p>The trading engine, the execution layer with the ghost-fill fix, the calibrated simulator, the circuit breakers and the monitor panel. <strong>$99, one time.</strong></p>
+      <div class="cta-row">
+        <a class="btn" href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=landing_close" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'landing_close'});}" data-goatcounter-click="checkout-landing_close">Get the bot &mdash; $99 once</a>
+        <a class="btn secondary" href="/docs.html">Read the docs first</a>
+      </div>
+      <p class="qualifier">Our own live experiment lost money overall, and nothing on this page is a forecast or a track record. Start in dry-run, and size your first live week as though it will be the losing one. Everything on this page is computed from data you can <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">download and recompute</a>.</p>
+    </div>
   </section>
 
   <section>
@@ -175,8 +362,35 @@ python uruguabot.py        # starts in dry-run, no real money</code></pre>
 </main>
 <footer class="site">
   <p><strong>Risk disclosure:</strong> Trading involves substantial risk of loss. Polymarket markets are binary and positions regularly resolve to $0.00. Past performance — good or bad — does not predict future results. Nothing on this site is financial advice. Never trade money you cannot afford to lose entirely.</p>
-  <p>Uruguabot is an independent project, not affiliated with, endorsed by, or connected to Polymarket or Chainlink. · <a href="/docs.html">Docs</a> · <a href="/blog/">Blog</a> · <a href="/es/">Español</a> · <a href="https://github.com/Emi-db/polymarket-bot-audit">Audit data</a> · Listed on <a href="https://polbots.com" rel="noopener">POLBOTS.COM</a></p>
+  <p>Uruguabot is an independent project, not affiliated with, endorsed by, or connected to Polymarket or Chainlink. · <a href="/docs.html">Docs</a> · <a href="/blog/">Blog</a> · <a href="/es/">Español</a> · <a href="https://github.com/Emi-db/polymarket-bot-audit" rel="noopener">Audit data</a> · Listed on <a href="https://polbots.com" rel="noopener">POLBOTS.COM</a></p>
 </footer>
 <script data-goatcounter="https://uruguabot.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+(function () {
+  function fireOnce(key, name) {
+    try { if (window.sessionStorage && sessionStorage.getItem(key)) { return; } } catch (e) {}
+    try { if (window.sessionStorage) { sessionStorage.setItem(key, '1'); } } catch (e) {}
+    try { if (typeof window.gtag === 'function') { window.gtag('event', name); } } catch (e) {}
+  }
+  if (!('IntersectionObserver' in window)) { return; }
+  var watch = [['code', 'ub_seen_code', 'view_code_section'],
+               ['get-it', 'ub_seen_close', 'view_close_section']];
+  var obs = new IntersectionObserver(function (entries) {
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      if (!e.isIntersecting) { continue; }
+      obs.unobserve(e.target);
+      fireOnce(e.target.getAttribute('data-ub-key'), e.target.getAttribute('data-ub-event'));
+    }
+  }, { threshold: 0 });
+  for (var j = 0; j < watch.length; j++) {
+    var el = document.getElementById(watch[j][0]);
+    if (!el) { continue; }
+    el.setAttribute('data-ub-key', watch[j][1]);
+    el.setAttribute('data-ub-event', watch[j][2]);
+    obs.observe(el);
+  }
+})();
+</script>
 </body>
 </html>

@@ -6,6 +6,8 @@
 <title>Uruguabot Blog — Honest Polymarket Bot Engineering</title>
 <meta name="description" content="Real audited data from building and running a Polymarket trading bot: measured slippage, execution bugs that cost money, and what a human vs bot accuracy test showed.">
 <link rel="canonical" href="https://uruguabot.com/blog/">
+<link rel="alternate" hreflang="en" href="https://uruguabot.com/blog/">
+<link rel="alternate" hreflang="x-default" href="https://uruguabot.com/blog/">
 <link rel="stylesheet" href="/style.css">
 <meta property="og:image" content="https://uruguabot.com/assets/uruguabot-banner.png">
 <meta property="og:image:width" content="1280">
@@ -33,7 +35,12 @@
 </header>
 <main>
   <h1>Blog</h1>
-  <p class="lead">Everything here is based on our own measured data — trade logs, exchange exports and audits. No hypotheticals, no screenshots of other people's wins.</p>
+  <p class="lead">Everything here is based on our own measured data — trade logs, price ticks and audit reports. No hypotheticals, no screenshots of other people's wins.</p>
+
+  <div class="offer-strip">
+    <p><strong>Disclosure:</strong> we also sell what these posts are about. <a href="/">Uruguabot</a> is the Python source of the bot in the audit &mdash; the CLOB V2 execution layer with the ghost-fill fix, a dry-run simulator calibrated on measured slippage, risk rails and the accuracy monitor &mdash; <a href="https://whop.com/uruguabot/uruguabot-full-source-code?utm_source=uruguabot&amp;utm_content=blog_index_strip" rel="noopener" onclick="if(typeof gtag==='function'){gtag('event','checkout_click',{cta_location:'blog_index_strip'});}" data-goatcounter-click="checkout-blog_index_strip">$99 once, sold as-is</a>. It ships with the record you are about to read, losses included; the full live experiment was a net loss and only the default configuration was profitable (+7.3% ROI at a 40% win rate).</p>
+  </div>
+
   <ul class="postlist">
     <li>
       <a href="/blog/we-lost-270-building-a-polymarket-bot.html">We lost $270 building a Polymarket bot — the complete audit</a>
