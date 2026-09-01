@@ -58,7 +58,7 @@ python uruguabot.py</code></pre>
   <h2>The default configuration is the validated one</h2>
   <p>The shipped <code>.env.example</code> is exactly the configuration that was profitable in our live testing ("Hypothesis B"):</p>
   <ul>
-    <li><strong>Asymmetric exits:</strong> stop-loss at execution price −10¢; winners held to $1.00/$0.00 resolution. Profitable at a 40% win rate because average wins were ~3× average losses &mdash; a validated mechanism rather than a proven ROI.</li>
+    <li><strong>Asymmetric exits:</strong> stop-loss at execution price −10¢; winners held to $1.00/$0.00 resolution. Profitable at a 40% win rate because average wins were roughly 2× average losses &mdash; a validated mechanism rather than a proven ROI.</li>
     <li><strong>BTC only</strong> (<code>ASSETS=btc</code>): BTC outperformed ETH consistently in our measured data. ETH is opt-in.</li>
     <li><strong>SELL-consensus entries in the 0.55–0.70 price band</strong> — the tested band.</li>
     <li><strong>Volatility guard on</strong> (<code>MAX_VOL_2MIN=0.0018</code>): skips regimes where measured SL slippage exploded (median −2¢, worst decile −24¢).</li>
